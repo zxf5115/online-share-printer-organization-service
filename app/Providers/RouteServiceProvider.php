@@ -36,9 +36,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        // 平台路由
-        $this->mapPlatformRoutes();
-
         // API路由
         $this->mapApiRoutes();
 
