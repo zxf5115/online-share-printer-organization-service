@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class Api extends Authenticatable implements JWTSubject
 {
-  protected $table = 'module_member';
+  protected $table = 'module_organization';
 
   use Notifiable;
 
