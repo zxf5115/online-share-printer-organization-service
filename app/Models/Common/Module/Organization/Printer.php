@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Common\Module\Member;
+namespace App\Models\Common\Module\Organization;
 
 use App\Models\Base;
 use App\Enum\Module\Member\PrinterEnum;
@@ -13,7 +13,7 @@ use App\Enum\Module\Member\PrinterEnum;
 class Printer extends Base
 {
   // 表名
-  public $table = "module_member_printer";
+  public $table = "module_organization_printer";
 
   // 可以批量修改的字段
   public $fillable = [
