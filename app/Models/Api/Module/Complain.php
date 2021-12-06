@@ -14,8 +14,8 @@ class Complain extends Common
   // 隐藏的属性
   public $hidden = [
     'organization_id',
-    'category_id',
     'member_id',
+    'type',
     'read_status',
     'status',
     'update_time'
@@ -26,21 +26,21 @@ class Complain extends Common
 
   /**
    * @author zhangxiaofei [<1326336909@qq.com>]
-   * @dateTime 2020-01-20
+   * @dateTime 2021-12-07
    * ------------------------------------------
-   * 投诉与投诉分类关联函数
+   * 投诉与投诉资源关联表
    * ------------------------------------------
    *
-   * 投诉与投诉分类关联函数
+   * 投诉与投诉资源关联表
    *
    * @return [关联对象]
    */
-  public function category()
+  public function resource()
   {
-    return $this->belongsTo(
-      'App\Models\Api\Module\Complain\Category',
-      'category_id',
-      'id'
-    )->where(['status'=>1]);
+    return $this->hasMany(
+      'App\Models\Api\Module\Complain\Resource',
+      'complain_id',
+      'id',
+    );
   }
 }

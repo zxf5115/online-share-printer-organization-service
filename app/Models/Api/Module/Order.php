@@ -14,7 +14,6 @@ class Order extends Common
   // 隐藏的属性
   public $hidden = [
     'organization_id',
-    'courseware_id',
     'member_id',
     'status',
     'update_time'
@@ -24,46 +23,23 @@ class Order extends Common
   // 关联函数 ------------------------------------------------------
 
 
-
-
   /**
    * @author zhangxiaofei [<1326336909@qq.com>]
-   * @dateTime 2021-07-07
+   * @dateTime 2021-06-29
    * ------------------------------------------
-   * 课程订单与课件关联函数
+   * 订单与一级代理商关联函数
    * ------------------------------------------
    *
-   * 课程订单与课件关联函数
+   * 订单与一级代理商关联函数
    *
    * @return [关联对象]
    */
-  public function courseware()
+  public function first()
   {
-    return $this->belongsToMany(
-      'App\Models\Common\Module\Education\Courseware',
-      'module_order_courseware',
-      'order_id',
-      'courseware_id'
-    );
-  }
-
-  /**
-   * @author zhangxiaofei [<1326336909@qq.com>]
-   * @dateTime 2021-07-07
-   * ------------------------------------------
-   * 课程订单与课件关联函数
-   * ------------------------------------------
-   *
-   * 课程订单与课件关联函数
-   *
-   * @return [关联对象]
-   */
-  public function coursewareRelevance()
-  {
-    return $this->hasMany(
-      'App\Models\Common\Module\Order\Courseware',
-      'order_id',
-      'id',
+    return $this->belongsTo(
+      'App\Models\Api\Module\Organization',
+      'first_level_agent_id',
+      'id'
     );
   }
 
@@ -72,10 +48,52 @@ class Order extends Common
    * @author zhangxiaofei [<1326336909@qq.com>]
    * @dateTime 2021-06-29
    * ------------------------------------------
-   * 课程订单与学员关联函数
+   * 订单与二级代理商关联函数
    * ------------------------------------------
    *
-   * 课程订单与学员关联函数
+   * 订单与二级代理商关联函数
+   *
+   * @return [关联对象]
+   */
+  public function second()
+  {
+    return $this->belongsTo(
+      'App\Models\Api\Module\Organization',
+      'second_level_agent_id',
+      'id'
+    );
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-06-29
+   * ------------------------------------------
+   * 订单与店长关联函数
+   * ------------------------------------------
+   *
+   * 订单与店长关联函数
+   *
+   * @return [关联对象]
+   */
+  public function manager()
+  {
+    return $this->belongsTo(
+      'App\Models\Api\Module\Organization',
+      'manager_id',
+      'id'
+    );
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-11-29
+   * ------------------------------------------
+   * 订单与会员关联函数
+   * ------------------------------------------
+   *
+   * 订单与会员关联函数
    *
    * @return [关联对象]
    */
@@ -85,6 +103,48 @@ class Order extends Common
       'App\Models\Api\Module\Member',
       'member_id',
       'id'
+    );
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-11-29
+   * ------------------------------------------
+   * 订单与打印机关联函数
+   * ------------------------------------------
+   *
+   * 订单与打印机关联函数
+   *
+   * @return [关联对象]
+   */
+  public function printer()
+  {
+    return $this->belongsTo(
+      'App\Models\Api\Module\Printer',
+      'printer_id',
+      'id'
+    );
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-11-08
+   * ------------------------------------------
+   * 订单与订单日志关联函数
+   * ------------------------------------------
+   *
+   * 订单与订单日志关联函数
+   *
+   * @return [关联对象]
+   */
+  public function log()
+  {
+    return $this->hasMany(
+      'App\Models\Api\Module\Order\Log',
+      'order_id',
+      'id',
     );
   }
 }
