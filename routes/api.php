@@ -45,6 +45,11 @@ $api->version('v1', [
           $api->get('list', 'AreaController@list');
         });
 
+        // 联系方式路由
+        $api->group(['prefix' => 'service'], function ($api) {
+          $api->get('data', 'ServiceController@data');
+        });
+
         // 系统协议路由
         $api->group(['prefix' => 'agreement'], function ($api) {
           $api->get('about', 'AgreementController@about');
@@ -117,6 +122,7 @@ $api->version('v1', [
         $api->post('change_code', 'OrganizationController@change_code');
         $api->post('change_mobile', 'OrganizationController@change_mobile');
         $api->get('data', 'OrganizationController@data');
+        $api->get('subordinate', 'OrganizationController@subordinate');
 
 
         // 机构关联内容路由
@@ -125,6 +131,7 @@ $api->version('v1', [
           // 机构资产路由
           $api->group(['prefix'  => 'asset'], function ($api) {
             $api->get('data', 'AssetController@data');
+            $api->get('equipment', 'AssetController@equipment');
           });
 
           // 机构收益模块路由

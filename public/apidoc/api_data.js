@@ -559,6 +559,56 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/common/service/data",
+    "title": "08. 联系我们",
+    "description": "<p>获取联系我们信息</p>",
+    "group": "02._公共模块",
+    "success": {
+      "fields": {
+        "basic params": [
+          {
+            "group": "basic params",
+            "type": "String",
+            "optional": false,
+            "field": "company_name",
+            "description": "<p>公司名称</p>"
+          },
+          {
+            "group": "basic params",
+            "type": "String",
+            "optional": false,
+            "field": "comapny_mobile",
+            "description": "<p>公司电话</p>"
+          },
+          {
+            "group": "basic params",
+            "type": "String",
+            "optional": false,
+            "field": "company_email",
+            "description": "<p>公司邮箱</p>"
+          },
+          {
+            "group": "basic params",
+            "type": "String",
+            "optional": false,
+            "field": "service_mobile",
+            "description": "<p>客服电话</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/common/service/data"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Common/ServiceController.php",
+    "groupTitle": "02._公共模块",
+    "name": "PostApiCommonServiceData"
+  },
+  {
+    "type": "post",
     "url": "/api/file/file",
     "title": "01. 上传文件",
     "description": "<p>通过base64的内容进行文件上传</p>",
@@ -1341,6 +1391,145 @@ define({ "api": [
     "name": "GetApiOrganizationStatus"
   },
   {
+    "type": "get",
+    "url": "/api/organization/subordinate",
+    "title": "07. 下属机构数据",
+    "description": "<p>根据机构编号获取机构数据</p>",
+    "group": "20._机构模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机构编号</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "字段说明|机构": [
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机构编号</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "role_id",
+            "description": "<p>角色编号</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>机构头像</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>登录账户</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "nickname",
+            "description": "<p>机构姓名</p>"
+          }
+        ],
+        "字段说明|档案": [
+          {
+            "group": "字段说明|档案",
+            "type": "String",
+            "optional": false,
+            "field": "sex",
+            "description": "<p>性别</p>"
+          },
+          {
+            "group": "字段说明|档案",
+            "type": "String",
+            "optional": false,
+            "field": "age",
+            "description": "<p>年龄</p>"
+          },
+          {
+            "group": "字段说明|档案",
+            "type": "String",
+            "optional": false,
+            "field": "province_id",
+            "description": "<p>省</p>"
+          },
+          {
+            "group": "字段说明|档案",
+            "type": "String",
+            "optional": false,
+            "field": "city_id",
+            "description": "<p>市</p>"
+          },
+          {
+            "group": "字段说明|档案",
+            "type": "String",
+            "optional": false,
+            "field": "region_id",
+            "description": "<p>县</p>"
+          },
+          {
+            "group": "字段说明|档案",
+            "type": "String",
+            "optional": false,
+            "field": "address",
+            "description": "<p>详细地址</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/subordinate"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/OrganizationController.php",
+    "groupTitle": "20._机构模块",
+    "name": "GetApiOrganizationSubordinate"
+  },
+  {
     "type": "post",
     "url": "/api/organization/change_code",
     "title": "04. 手机验变更证码[略]",
@@ -1653,6 +1842,87 @@ define({ "api": [
     "filename": "app/Http/Controllers/Api/Module/Organization/AssetController.php",
     "groupTitle": "21._机构资产模块",
     "name": "GetApiOrganizationAssetData"
+  },
+  {
+    "type": "get",
+    "url": "/api/organization/asset/equipment",
+    "title": "02. 设备中心",
+    "description": "<p>获取当前机构设备中心数据</p>",
+    "group": "21._机构资产模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "page",
+            "description": "<p>当前页数</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "字段说明|打印机": [
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "printer_total",
+            "description": "<p>打印机总量</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "already_printer_total",
+            "description": "<p>已分配总量</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "without_printer_total",
+            "description": "<p>未分配总量</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/asset/equipment"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/AssetController.php",
+    "groupTitle": "21._机构资产模块",
+    "name": "GetApiOrganizationAssetEquipment"
   },
   {
     "type": "get",

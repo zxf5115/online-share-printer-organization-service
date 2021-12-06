@@ -27,7 +27,12 @@ class OrganizationController extends BaseController
 
   // 关联对象
   protected $_relevance = [
-    'archive',
+    'data' => [
+      'archive',
+    ],
+    'subordinate' => [
+      'asset'
+    ]
   ];
 
 
@@ -67,7 +72,7 @@ class OrganizationController extends BaseController
       $condition = array_merge($condition, $this->_where);
 
       // 获取关联对象
-      $relevance = self::getRelevanceData($this->_relevance, 'archive');
+      $relevance = self::getRelevanceData($this->_relevance, 'data');
 
       $response = $this->_model::getRow($condition, $relevance);
 
@@ -110,10 +115,7 @@ class OrganizationController extends BaseController
 
       $condition = array_merge($condition, $this->_where);
 
-      // 获取关联对象
-      $relevance = self::getRelevanceData($this->_relevance, 'status');
-
-      $result = $this->_model::getRow($condition, $relevance);
+      $result = $this->_model::getRow($condition);
 
       if(!empty($result) || !empty($result->archive))
       {
@@ -409,6 +411,60 @@ class OrganizationController extends BaseController
       $relevance = self::getRelevanceData($this->_relevance, 'data');
 
       $response = $this->_model::getRow($condition, $relevance);
+
+      return self::success($response);
+    }
+    catch(\Exception $e)
+    {
+      // 记录异常信息
+      self::record($e);
+
+      return self::error(Code::ERROR);
+    }
+  }
+
+
+  /**
+   * @api {get} /api/organization/subordinate 07. 下属机构数据
+   * @apiDescription 根据机构编号获取机构数据
+   * @apiGroup 20. 机构模块
+   * @apiPermission jwt
+   * @apiHeader {String} Authorization 身份令牌
+   * @apiHeaderExample {json} Header-Example:
+   * {
+   *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
+   * }
+   *
+   * @apiParam {int} id 机构编号
+   *
+   * @apiSuccess (字段说明|机构) {String} id 机构编号
+   * @apiSuccess (字段说明|机构) {String} role_id 角色编号
+   * @apiSuccess (字段说明|机构) {String} avatar 机构头像
+   * @apiSuccess (字段说明|机构) {String} username 登录账户
+   * @apiSuccess (字段说明|机构) {String} nickname 机构姓名
+   * @apiSuccess (字段说明|档案) {String} sex 性别
+   * @apiSuccess (字段说明|档案) {String} age 年龄
+   * @apiSuccess (字段说明|档案) {String} province_id 省
+   * @apiSuccess (字段说明|档案) {String} city_id 市
+   * @apiSuccess (字段说明|档案) {String} region_id 县
+   * @apiSuccess (字段说明|档案) {String} address 详细地址
+   *
+   * @apiSampleRequest /api/organization/subordinate
+   * @apiVersion 1.0.0
+   */
+  public function subordinate(Request $request)
+  {
+    try
+    {
+      // 获取当前机构基础查询条件
+      $condition = self::getCurrentWhereData('parent_id');
+
+      $condition = array_merge($condition, $this->_where);
+
+      // 获取关联对象
+      $relevance = self::getRelevanceData($this->_relevance, 'subordinate');
+
+      $response = $this->_model::getPaging($condition, $relevance, $this->_order);
 
       return self::success($response);
     }
