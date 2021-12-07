@@ -1073,6 +1073,445 @@
   },
   {
     "type": "get",
+    "url": "/api/printer/list?page={page}",
+    "title": "01. 打印机列表",
+    "description": "<p>获取打印机列表(分页)</p>",
+    "group": "12._打印机模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "page",
+            "description": "<p>当前页数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "member_id",
+            "description": "<p>机构自增编号</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "字段说明|打印机": [
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>打印机自增编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "first_level_agent_id",
+            "description": "<p>一级代理商编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "second_level_agent_id",
+            "description": "<p>二级代理商编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "manager_id",
+            "description": "<p>店长编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>打印机名称</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "model",
+            "description": "<p>打印机型号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>打印机编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "province_id",
+            "description": "<p>所在省份</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "city_id",
+            "description": "<p>所在城市</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "region_id",
+            "description": "<p>所在区县</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "address",
+            "description": "<p>详细地址</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "remark",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "ink_quantity",
+            "description": "<p>剩余墨量</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "paper_quantity",
+            "description": "<p>纸张消耗量</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "failure_number",
+            "description": "<p>故障次数</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "bind_status",
+            "description": "<p>绑定状态 1 已绑定 2 未绑定</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "bind_time",
+            "description": "<p>绑定时间</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "activate_time",
+            "description": "<p>激活时间</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "artivate_status",
+            "description": "<p>激活状态 1正常 2离线 3损坏</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>创建时间</p>"
+          }
+        ],
+        "字段说明|店长": [
+          {
+            "group": "字段说明|店长",
+            "type": "String",
+            "optional": false,
+            "field": "nickname",
+            "description": "<p>店长姓名</p>"
+          },
+          {
+            "group": "字段说明|店长",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>店长电话</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/printer/list"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/PrinterController.php",
+    "groupTitle": "12._打印机模块",
+    "name": "GetApiPrinterListPagePage"
+  },
+  {
+    "type": "get",
+    "url": "/api/printer/view/{id}",
+    "title": "02. 打印机详情",
+    "description": "<p>获取打印机的详情</p>",
+    "group": "12._打印机模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "id",
+            "description": "<p>打印机编号</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "字段说明|打印机": [
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>打印机自增编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "first_level_agent_id",
+            "description": "<p>一级代理商编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "second_level_agent_id",
+            "description": "<p>二级代理商编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "manager_id",
+            "description": "<p>店长编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>打印机名称</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "model",
+            "description": "<p>打印机型号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>打印机编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "province_id",
+            "description": "<p>所在省份</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "city_id",
+            "description": "<p>所在城市</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "region_id",
+            "description": "<p>所在区县</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "address",
+            "description": "<p>详细地址</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "remark",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "ink_quantity",
+            "description": "<p>剩余墨量</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "paper_quantity",
+            "description": "<p>纸张消耗量</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "failure_number",
+            "description": "<p>故障次数</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "bind_status",
+            "description": "<p>绑定状态 1 已绑定 2 未绑定</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "bind_time",
+            "description": "<p>绑定时间</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "activate_time",
+            "description": "<p>激活时间</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "artivate_status",
+            "description": "<p>激活状态 1正常 2离线 3损坏</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>创建时间</p>"
+          }
+        ],
+        "字段说明|店长": [
+          {
+            "group": "字段说明|店长",
+            "type": "String",
+            "optional": false,
+            "field": "nickname",
+            "description": "<p>店长姓名</p>"
+          },
+          {
+            "group": "字段说明|店长",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>店长电话</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/printer/view/{id}"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/PrinterController.php",
+    "groupTitle": "12._打印机模块",
+    "name": "GetApiPrinterViewId"
+  },
+  {
+    "type": "get",
     "url": "/api/organization/archive",
     "title": "01. 当前机构档案",
     "description": "<p>获取当前机构的档案信息</p>",
@@ -1280,48 +1719,62 @@
             "description": "<p>机构姓名</p>"
           }
         ],
-        "字段说明|档案": [
+        "字段说明|资产": [
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "sex",
-            "description": "<p>性别</p>"
+            "field": "money",
+            "description": "<p>账户资产</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "age",
-            "description": "<p>年龄</p>"
+            "field": "proportion",
+            "description": "<p>分成收益</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "province_id",
-            "description": "<p>省</p>"
+            "field": "withdrawal_money",
+            "description": "<p>提现金额</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "city_id",
-            "description": "<p>市</p>"
+            "field": "should_printer_total",
+            "description": "<p>认购打印机数量</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "region_id",
-            "description": "<p>县</p>"
+            "field": "already_printer_total",
+            "description": "<p>已收到打印机数量</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "address",
-            "description": "<p>详细地址</p>"
+            "field": "order_total",
+            "description": "<p>订单数量</p>"
+          },
+          {
+            "group": "字段说明|资产",
+            "type": "String",
+            "optional": false,
+            "field": "yesterday_money",
+            "description": "<p>昨天收益</p>"
+          },
+          {
+            "group": "字段说明|资产",
+            "type": "String",
+            "optional": false,
+            "field": "current_month_money",
+            "description": "<p>本月收益</p>"
           }
         ]
       }
@@ -1430,6 +1883,13 @@
             "optional": false,
             "field": "id",
             "description": "<p>机构编号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "role_id",
+            "description": "<p>角色类型 3下级代理商 2下级店长</p>"
           }
         ]
       }
@@ -1473,48 +1933,62 @@
             "description": "<p>机构姓名</p>"
           }
         ],
-        "字段说明|档案": [
+        "字段说明|资产": [
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "sex",
-            "description": "<p>性别</p>"
+            "field": "money",
+            "description": "<p>账户资产</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "age",
-            "description": "<p>年龄</p>"
+            "field": "proportion",
+            "description": "<p>分成收益</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "province_id",
-            "description": "<p>省</p>"
+            "field": "withdrawal_money",
+            "description": "<p>提现金额</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "city_id",
-            "description": "<p>市</p>"
+            "field": "should_printer_total",
+            "description": "<p>认购打印机数量</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "region_id",
-            "description": "<p>县</p>"
+            "field": "already_printer_total",
+            "description": "<p>已收到打印机数量</p>"
           },
           {
-            "group": "字段说明|档案",
+            "group": "字段说明|资产",
             "type": "String",
             "optional": false,
-            "field": "address",
-            "description": "<p>详细地址</p>"
+            "field": "order_total",
+            "description": "<p>订单数量</p>"
+          },
+          {
+            "group": "字段说明|资产",
+            "type": "String",
+            "optional": false,
+            "field": "yesterday_money",
+            "description": "<p>昨天收益</p>"
+          },
+          {
+            "group": "字段说明|资产",
+            "type": "String",
+            "optional": false,
+            "field": "current_month_money",
+            "description": "<p>本月收益</p>"
           }
         ]
       }

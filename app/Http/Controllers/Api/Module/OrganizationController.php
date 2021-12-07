@@ -20,6 +20,11 @@ class OrganizationController extends BaseController
   // 模型名称
   protected $_model = 'App\Models\Api\Module\Organization';
 
+  // 客户端搜索字段
+  protected $_params = [
+    'role_id',
+  ];
+
   // 排序方式
   protected $_order = [
     ['key' => 'id', 'value' => 'asc'],
@@ -27,8 +32,11 @@ class OrganizationController extends BaseController
 
   // 关联对象
   protected $_relevance = [
-    'data' => [
+    'archive' => [
       'archive',
+    ],
+    'data' => [
+      'asset'
     ],
     'subordinate' => [
       'asset'
@@ -72,7 +80,7 @@ class OrganizationController extends BaseController
       $condition = array_merge($condition, $this->_where);
 
       // 获取关联对象
-      $relevance = self::getRelevanceData($this->_relevance, 'data');
+      $relevance = self::getRelevanceData($this->_relevance, 'archive');
 
       $response = $this->_model::getRow($condition, $relevance);
 
@@ -391,12 +399,14 @@ class OrganizationController extends BaseController
    * @apiSuccess (字段说明|机构) {String} avatar 机构头像
    * @apiSuccess (字段说明|机构) {String} username 登录账户
    * @apiSuccess (字段说明|机构) {String} nickname 机构姓名
-   * @apiSuccess (字段说明|档案) {String} sex 性别
-   * @apiSuccess (字段说明|档案) {String} age 年龄
-   * @apiSuccess (字段说明|档案) {String} province_id 省
-   * @apiSuccess (字段说明|档案) {String} city_id 市
-   * @apiSuccess (字段说明|档案) {String} region_id 县
-   * @apiSuccess (字段说明|档案) {String} address 详细地址
+   * @apiSuccess (字段说明|资产) {String} money 账户资产
+   * @apiSuccess (字段说明|资产) {String} proportion 分成收益
+   * @apiSuccess (字段说明|资产) {String} withdrawal_money 提现金额
+   * @apiSuccess (字段说明|资产) {String} should_printer_total 认购打印机数量
+   * @apiSuccess (字段说明|资产) {String} already_printer_total 已收到打印机数量
+   * @apiSuccess (字段说明|资产) {String} order_total 订单数量
+   * @apiSuccess (字段说明|资产) {String} yesterday_money 昨天收益
+   * @apiSuccess (字段说明|资产) {String} current_month_money 本月收益
    *
    * @apiSampleRequest /api/organization/data
    * @apiVersion 1.0.0
@@ -436,18 +446,21 @@ class OrganizationController extends BaseController
    * }
    *
    * @apiParam {int} id 机构编号
+   * @apiParam {int} role_id 角色类型 3下级代理商 2下级店长
    *
    * @apiSuccess (字段说明|机构) {String} id 机构编号
    * @apiSuccess (字段说明|机构) {String} role_id 角色编号
    * @apiSuccess (字段说明|机构) {String} avatar 机构头像
    * @apiSuccess (字段说明|机构) {String} username 登录账户
    * @apiSuccess (字段说明|机构) {String} nickname 机构姓名
-   * @apiSuccess (字段说明|档案) {String} sex 性别
-   * @apiSuccess (字段说明|档案) {String} age 年龄
-   * @apiSuccess (字段说明|档案) {String} province_id 省
-   * @apiSuccess (字段说明|档案) {String} city_id 市
-   * @apiSuccess (字段说明|档案) {String} region_id 县
-   * @apiSuccess (字段说明|档案) {String} address 详细地址
+   * @apiSuccess (字段说明|资产) {String} money 账户资产
+   * @apiSuccess (字段说明|资产) {String} proportion 分成收益
+   * @apiSuccess (字段说明|资产) {String} withdrawal_money 提现金额
+   * @apiSuccess (字段说明|资产) {String} should_printer_total 认购打印机数量
+   * @apiSuccess (字段说明|资产) {String} already_printer_total 已收到打印机数量
+   * @apiSuccess (字段说明|资产) {String} order_total 订单数量
+   * @apiSuccess (字段说明|资产) {String} yesterday_money 昨天收益
+   * @apiSuccess (字段说明|资产) {String} current_month_money 本月收益
    *
    * @apiSampleRequest /api/organization/subordinate
    * @apiVersion 1.0.0
@@ -457,9 +470,19 @@ class OrganizationController extends BaseController
     try
     {
       // 获取当前机构基础查询条件
-      $condition = self::getCurrentWhereData('parent_id');
+      $condition = self::getSimpleWhereData();
 
-      $condition = array_merge($condition, $this->_where);
+      // 对用户请求进行过滤
+      $filter = $this->filter($request->all());
+
+      // 获得下级机构编号
+      $member_id = $this->_model::getChildUserData();
+
+      $where = [
+        ['parent_id', $member_id]
+      ];
+
+      $condition = array_merge($condition, $this->_where, $filter, $where);
 
       // 获取关联对象
       $relevance = self::getRelevanceData($this->_relevance, 'subordinate');

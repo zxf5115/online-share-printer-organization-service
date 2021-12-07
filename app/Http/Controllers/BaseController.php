@@ -480,6 +480,34 @@ class BaseController extends Controller
 
   /**
    * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-11-23
+   * ------------------------------------------
+   * 获得查询指定用户字段
+   * ------------------------------------------
+   *
+   * 获得查询指定用户字段
+   *
+   * @return [type]
+   */
+  public static function getChildUserQueryField()
+  {
+    $level = auth('api')->user()->level;
+
+    if(1 == $level)
+    {
+      $response = 'second_level_agent_id';
+    }
+    else
+    {
+      $response = 'manager_id';
+    }
+
+    return $response;
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
    * @dateTime 2020-12-07
    * ------------------------------------------
    * 获取关联查询数据

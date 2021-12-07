@@ -114,6 +114,13 @@ $api->version('v1', [
       });
 
 
+      // 打印机路由
+      $api->group(['prefix'  => 'printer'], function ($api) {
+        $api->get('list', 'PrinterController@list');
+        $api->get('view/{id}', 'PrinterController@view');
+      });
+
+
       // 机构路由
       $api->group(['prefix'  => 'organization', 'middleware' => ['auth:api', 'refresh.token.api', 'failure']], function ($api) {
         $api->get('archive', 'OrganizationController@archive');

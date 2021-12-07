@@ -95,6 +95,44 @@ class Organization extends Common
   }
 
 
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-12-07
+   * ------------------------------------------
+   * 获得下级机构编号
+   * ------------------------------------------
+   *
+   * 获得下级机构编号
+   *
+   * @return [type]
+   */
+  public static function getChildUserData()
+  {
+    $member_id = auth('api')->user()->id;
+
+    $where = [
+      'parent_id' => $member_id,
+      'status'    => 1
+    ];
+
+    $response = self::getPluck('id', $where, false, false, true);
+
+    foreach($response as $item)
+    {
+      $where = [
+        'parent_id' => $item,
+        'status'    => 1
+      ];
+
+      $data = self::getPluck('id', $where, false, false, true);
+
+      $response = array_merge($response, $data);
+    }
+
+    array_unshift($response, $member_id);
+
+    return $response;
+  }
 
 
   // 关联函数 ------------------------------------------------------
