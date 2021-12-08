@@ -13,11 +13,11 @@ class Withdrawal extends Common
 {
   // 隐藏的属性
   public $hidden = [
-    'id',
     'organization_id',
     'member_id',
+    'pay_type',
+    'confirm_status',
     'status',
-    'create_time',
     'update_time'
   ];
 }

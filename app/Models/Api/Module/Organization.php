@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\TraitClass\ToolTrait;
 use App\Http\Constant\Parameter;
+use App\Models\Common\Module\Organization\Obtain;
 use App\Models\Common\Module\Organization as Common;
 
 
@@ -92,46 +93,6 @@ class Organization extends Common
 
       return false;
     }
-  }
-
-
-  /**
-   * @author zhangxiaofei [<1326336909@qq.com>]
-   * @dateTime 2021-12-07
-   * ------------------------------------------
-   * 获得下级机构编号
-   * ------------------------------------------
-   *
-   * 获得下级机构编号
-   *
-   * @return [type]
-   */
-  public static function getChildUserData()
-  {
-    $member_id = auth('api')->user()->id;
-
-    $where = [
-      'parent_id' => $member_id,
-      'status'    => 1
-    ];
-
-    $response = self::getPluck('id', $where, false, false, true);
-
-    foreach($response as $item)
-    {
-      $where = [
-        'parent_id' => $item,
-        'status'    => 1
-      ];
-
-      $data = self::getPluck('id', $where, false, false, true);
-
-      $response = array_merge($response, $data);
-    }
-
-    array_unshift($response, $member_id);
-
-    return $response;
   }
 
 
@@ -258,6 +219,27 @@ class Organization extends Common
   {
     return $this->hasOne(
       'App\Models\Api\Module\Organization\Resource',
+      'member_id',
+      'id'
+    );
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-12-08
+   * ------------------------------------------
+   * 机构与收益关联函数
+   * ------------------------------------------
+   *
+   * 机构与收益关联函数
+   *
+   * @return [关联对象]
+   */
+  public function obtain()
+  {
+    return $this->hasMany(
+      'App\Models\Api\Module\Organization\Obtain',
       'member_id',
       'id'
     );

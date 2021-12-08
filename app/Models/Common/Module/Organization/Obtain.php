@@ -42,9 +42,9 @@ class Obtain extends Base
    * @param int $value 状态值
    * @return 状态信息
    */
-  public function getPayTypeAttribute($value)
+  public function getTypeAttribute($value)
   {
-    return ObtainEnum::getPayType($value);
+    return ObtainEnum::getTypeStatus($value);
   }
 
 

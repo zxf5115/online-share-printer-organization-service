@@ -130,6 +130,7 @@ $api->version('v1', [
         $api->post('change_mobile', 'OrganizationController@change_mobile');
         $api->get('data', 'OrganizationController@data');
         $api->get('subordinate', 'OrganizationController@subordinate');
+        $api->get('obtain', 'OrganizationController@obtain');
 
 
         // 机构关联内容路由
@@ -143,7 +144,15 @@ $api->version('v1', [
 
           // 机构收益模块路由
           $api->group(['prefix'  => 'obtain'], function ($api) {
+            $api->get('center', 'ObtainController@center');
             $api->get('list', 'ObtainController@list');
+          });
+
+          // 机构提现路由
+          $api->group(['prefix'  => 'withdrawal'], function ($api) {
+            $api->get('list', 'WithdrawalController@list');
+            $api->get('view/{id}', 'WithdrawalController@view');
+            $api->post('handle', 'WithdrawalController@handle');
           });
 
           // 机构订单路由

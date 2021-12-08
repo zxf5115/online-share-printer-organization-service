@@ -8,6 +8,7 @@ use App\Http\Constant\Code;
 use App\Events\Common\Sms\CodeEvent;
 use App\Events\Common\Message\SmsEvent;
 use App\Http\Controllers\Api\BaseController;
+use App\Models\Api\Module\Organization\Obtain;
 
 /**
  * @author zhangxiaofei [<1326336909@qq.com>]
@@ -25,6 +26,13 @@ class OrganizationController extends BaseController
     'role_id',
   ];
 
+  // 附加搜索条件
+  protected $_addition = [
+    // 'obtain' => [
+    //   'create_time'
+    // ]
+  ];
+
   // 排序方式
   protected $_order = [
     ['key' => 'id', 'value' => 'asc'],
@@ -40,7 +48,8 @@ class OrganizationController extends BaseController
     ],
     'subordinate' => [
       'asset'
-    ]
+    ],
+    'obtain' => []
   ];
 
 
@@ -447,6 +456,7 @@ class OrganizationController extends BaseController
    *
    * @apiParam {int} id 机构编号
    * @apiParam {int} role_id 角色类型 3下级代理商 2下级店长
+   * @apiParam {int} asset_create_time 提现时间
    *
    * @apiSuccess (字段说明|机构) {String} id 机构编号
    * @apiSuccess (字段说明|机构) {String} role_id 角色编号
@@ -470,24 +480,81 @@ class OrganizationController extends BaseController
     try
     {
       // 获取当前机构基础查询条件
-      $condition = self::getSimpleWhereData();
+      $condition = self::getCurrentWhereData('parent_id');
 
       // 对用户请求进行过滤
       $filter = $this->filter($request->all());
 
-      // 获得下级机构编号
-      $member_id = $this->_model::getChildUserData();
-
-      $where = [
-        ['parent_id', $member_id]
-      ];
-
-      $condition = array_merge($condition, $this->_where, $filter, $where);
+      $condition = array_merge($condition, $this->_where, $filter);
 
       // 获取关联对象
       $relevance = self::getRelevanceData($this->_relevance, 'subordinate');
 
       $response = $this->_model::getPaging($condition, $relevance, $this->_order);
+
+      return self::success($response);
+    }
+    catch(\Exception $e)
+    {
+      // 记录异常信息
+      self::record($e);
+
+      return self::error(Code::ERROR);
+    }
+  }
+
+
+  /**
+   * @api {get} /api/organization/obtain 08. 下属机构收益
+   * @apiDescription 根据机构编号获取机构收益
+   * @apiGroup 20. 机构模块
+   * @apiPermission jwt
+   * @apiHeader {String} Authorization 身份令牌
+   * @apiHeaderExample {json} Header-Example:
+   * {
+   *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
+   * }
+   *
+   * @apiParam {int} id 机构编号
+   * @apiParam {int} role_id 角色类型 3下级代理商 2下级店长
+   * @apiParam {int} create_time 提现时间
+   *
+   * @apiParamExample {json} Param-Example:
+   * {
+   *   "create_time": [
+   *     "2021-05-05 17:01:01",
+   *     "2021-07-07 17:01:10"
+   *   ]
+   * }
+   *
+   * @apiSuccess (字段说明|机构) {String} id 机构编号
+   * @apiSuccess (字段说明|机构) {String} role_id 角色编号
+   * @apiSuccess (字段说明|机构) {String} avatar 机构头像
+   * @apiSuccess (字段说明|机构) {String} username 登录账户
+   * @apiSuccess (字段说明|机构) {String} nickname 机构姓名
+   * @apiSuccess (字段说明|收益) {String} obtain_money 收益金额
+   *
+   * @apiSampleRequest /api/organization/obtain
+   * @apiVersion 1.0.0
+   */
+  public function obtain(Request $request)
+  {
+    try
+    {
+      // 获取当前机构基础查询条件
+      $condition = self::getCurrentWhereData('parent_id');
+
+      // 对用户请求进行过滤
+      $filter = $this->filter($request->all());
+
+      $condition = array_merge($condition, $this->_where, $filter);
+
+      // 获取关联对象
+      $relevance = self::getRelevanceData($this->_relevance, 'obtain');
+
+      $response = $this->_model::getPaging($condition, $relevance, $this->_order, true);
+
+      $response = Obtain::getObtainMoney($response, $request->all());
 
       return self::success($response);
     }

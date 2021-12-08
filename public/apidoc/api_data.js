@@ -1791,6 +1791,131 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/api/organization/obtain",
+    "title": "08. 下属机构收益",
+    "description": "<p>根据机构编号获取机构收益</p>",
+    "group": "20._机构模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机构编号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "role_id",
+            "description": "<p>角色类型 3下级代理商 2下级店长</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>提现时间</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"create_time\": [\n    \"2021-05-05 17:01:01\",\n    \"2021-07-07 17:01:10\"\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "字段说明|机构": [
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机构编号</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "role_id",
+            "description": "<p>角色编号</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>机构头像</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>登录账户</p>"
+          },
+          {
+            "group": "字段说明|机构",
+            "type": "String",
+            "optional": false,
+            "field": "nickname",
+            "description": "<p>机构姓名</p>"
+          }
+        ],
+        "字段说明|收益": [
+          {
+            "group": "字段说明|收益",
+            "type": "String",
+            "optional": false,
+            "field": "obtain_money",
+            "description": "<p>收益金额</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/obtain"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/OrganizationController.php",
+    "groupTitle": "20._机构模块",
+    "name": "GetApiOrganizationObtain"
+  },
+  {
+    "type": "get",
     "url": "/api/organization/status",
     "title": "02. 当前机构是否填写资料",
     "description": "<p>获取当前机构是否填写资料信息</p>",
@@ -1890,6 +2015,13 @@ define({ "api": [
             "optional": false,
             "field": "role_id",
             "description": "<p>角色类型 3下级代理商 2下级店长</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "asset_create_time",
+            "description": "<p>提现时间</p>"
           }
         ]
       }
@@ -2400,8 +2532,8 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/api/organization/obtain/list",
-    "title": "01. 我的收益列表",
+    "url": "/api/organization/obtain/center",
+    "title": "01. 我的收益中心",
     "description": "<p>获取当前会员的收益列表</p>",
     "group": "22._机构收益模块",
     "permission": [
@@ -2436,8 +2568,96 @@ define({ "api": [
             "group": "字段说明",
             "type": "String",
             "optional": false,
+            "field": "total",
+            "description": "<p>收益笔数</p>"
+          },
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "money",
+            "description": "<p>收益金额</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/obtain/center"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/ObtainController.php",
+    "groupTitle": "22._机构收益模块",
+    "name": "GetApiOrganizationObtainCenter"
+  },
+  {
+    "type": "get",
+    "url": "/api/organization/obtain/list",
+    "title": "02. 我的收益列表",
+    "description": "<p>获取当前会员的收益列表</p>",
+    "group": "22._机构收益模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>提现时间</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"create_time\": [\n    \"2021-05-05 17:01:01\",\n    \"2021-07-07 17:01:10\"\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "字段说明": [
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
             "field": "type",
-            "description": "<p>收益类型 1分红</p>"
+            "description": "<p>收益自增编号</p>"
+          },
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "order_id",
+            "description": "<p>收益订单自增编号</p>"
           },
           {
             "group": "字段说明",
@@ -2454,7 +2674,14 @@ define({ "api": [
             "description": "<p>收益时间</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success:",
+          "content": "[\n  {\n    time: '时间',\n    money: '收益',\n    data: [\n      {id:4,...},\n      {id:5,...},\n    ]\n  },{\n    time: '时间',\n    money: '收益',\n    data: [\n      {id:4,...},\n      {id:5,...},\n    ]\n  },\n]",
+          "type": "json"
+        }
+      ]
     },
     "sampleRequest": [
       {
@@ -3045,6 +3272,222 @@ define({ "api": [
     "filename": "app/Http/Controllers/Api/Module/Organization/OrderController.php",
     "groupTitle": "23._机构订单模块",
     "name": "PostApiOrganizationOrderRefund"
+  },
+  {
+    "type": "get",
+    "url": "/api/organization/withdrawal/list?page={page}",
+    "title": "01. 我的提现列表",
+    "description": "<p>获取当前机构提现列表(分页)</p>",
+    "group": "24._机构提现模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "page",
+            "description": "<p>当前页数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "array",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>提现时间</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"create_time\": [\n    \"2021-05-05 17:01:01\",\n    \"2021-07-07 17:01:10\"\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "字段说明": [
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "money",
+            "description": "<p>提现金额</p>"
+          },
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>提现时间</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/withdrawal/list"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/WithdrawalController.php",
+    "groupTitle": "24._机构提现模块",
+    "name": "GetApiOrganizationWithdrawalListPagePage"
+  },
+  {
+    "type": "get",
+    "url": "/api/organization/withdrawal/view/{id}",
+    "title": "02. 我的提现详情",
+    "description": "<p>获取当前机构提现的详情</p>",
+    "group": "24._机构提现模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "id",
+            "description": "<p>提现编号</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "字段说明": [
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "money",
+            "description": "<p>提现金额</p>"
+          },
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>提现时间</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/withdrawal/view/{id}"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/WithdrawalController.php",
+    "groupTitle": "24._机构提现模块",
+    "name": "GetApiOrganizationWithdrawalViewId"
+  },
+  {
+    "type": "post",
+    "url": "/api/organization/withdrawal/handle",
+    "title": "03. 提现[TODO]",
+    "description": "<p>当前机构标记某个提现完成</p>",
+    "group": "24._机构提现模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "money",
+            "description": "<p>提现金额</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/withdrawal/handle"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/WithdrawalController.php",
+    "groupTitle": "24._机构提现模块",
+    "name": "PostApiOrganizationWithdrawalHandle"
   },
   {
     "type": "get",

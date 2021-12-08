@@ -75,8 +75,9 @@ trait ToolTrait
 
     foreach($result as $k => $item)
     {
-      $response[$k]['time'] = $allocation[$k];
-      $response[$k]['data'] = $item;
+      $response[$k]['time']  = $allocation[$k];
+      $response[$k]['money'] = self::add($item);
+      $response[$k]['data']  = $item;
     }
 
     $response = array_values($response);
@@ -84,5 +85,18 @@ trait ToolTrait
     $data['data'] = $response;
 
     return $data;
+  }
+
+
+  private static function add($data)
+  {
+    $response = 0;
+
+    foreach($data as $item)
+    {
+      $response = bcadd($response, $item['money'], 2);
+    }
+
+    return $response;
   }
 }
