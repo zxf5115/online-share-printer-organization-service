@@ -41,24 +41,27 @@ class OrderController extends BaseController
    *
    * @apiSuccess (字段说明|订单) {String} id 订单编号
    * @apiSuccess (字段说明|订单) {String} order_no 订单号
-   * @apiSuccess (字段说明|订单) {String} member_id 机构编号
+   * @apiSuccess (字段说明|订单) {String} first_level_agent_id 一级代理商自增编号
+   * @apiSuccess (字段说明|订单) {String} second_level_agent_id 二级代理商自增编号
+   * @apiSuccess (字段说明|订单) {String} manager_id 店长自增编号
+   * @apiSuccess (字段说明|订单) {String} printer_id 打印机自增编号
+   * @apiSuccess (字段说明|订单) {String} member_id 会员编号
+   * @apiSuccess (字段说明|订单) {String} type 打印类型
+   * @apiSuccess (字段说明|订单) {String} title 打印文件名称
+   * @apiSuccess (字段说明|订单) {String} page_total 文件页数
+   * @apiSuccess (字段说明|订单) {String} print_total 打印份数
    * @apiSuccess (字段说明|订单) {String} pay_money 支付金额
    * @apiSuccess (字段说明|订单) {String} pay_type 支付类型
    * @apiSuccess (字段说明|订单) {String} pay_status 支付状态
    * @apiSuccess (字段说明|订单) {String} pay_time 支付时间
    * @apiSuccess (字段说明|订单) {String} order_status 订单状态
    * @apiSuccess (字段说明|订单) {String} create_time 创建时间
-   * @apiSuccess (字段说明|) {Number} id 编号
-   * @apiSuccess (字段说明|) {String} code 代码
-   * @apiSuccess (字段说明|) {String} title 名称
-   * @apiSuccess (字段说明|) {String} picture 图片
-   * @apiSuccess (字段说明|) {String} content 内容
-   * @apiSuccess (字段说明|) {String} money 价格
-   * @apiSuccess (字段说明|) {String} point_total 集数
-   * @apiSuccess (字段说明|) {String} watch_total 观看总数
-   * @apiSuccess (字段说明|) {String} is_shelf 是否上架
-   * @apiSuccess (字段说明|) {String} is_trial 是否试看
-   * @apiSuccess (字段说明|) {String} is_recommend 是否推荐
+   * @apiSuccess (字段说明|店长) {String} id 店长自增编号
+   * @apiSuccess (字段说明|店长) {String} nickanme 店长姓名
+   * @apiSuccess (字段说明|打印机) {String} id 打印机自增编号
+   * @apiSuccess (字段说明|打印机) {String} code 打印机编号
+   * @apiSuccess (字段说明|打印机) {String} model 打印机型号
+   * @apiSuccess (字段说明|打印机) {String} address 打印机地址
    *
    * @apiSampleRequest /api/organization/order/list
    * @apiVersion 1.0.0
@@ -108,24 +111,27 @@ class OrderController extends BaseController
    *
    * @apiSuccess (字段说明|订单) {String} id 订单编号
    * @apiSuccess (字段说明|订单) {String} order_no 订单号
-   * @apiSuccess (字段说明|订单) {String} member_id 机构编号
+   * @apiSuccess (字段说明|订单) {String} first_level_agent_id 一级代理商自增编号
+   * @apiSuccess (字段说明|订单) {String} second_level_agent_id 二级代理商自增编号
+   * @apiSuccess (字段说明|订单) {String} manager_id 店长自增编号
+   * @apiSuccess (字段说明|订单) {String} printer_id 打印机自增编号
+   * @apiSuccess (字段说明|订单) {String} member_id 会员编号
+   * @apiSuccess (字段说明|订单) {String} type 打印类型
+   * @apiSuccess (字段说明|订单) {String} title 打印文件名称
+   * @apiSuccess (字段说明|订单) {String} page_total 文件页数
+   * @apiSuccess (字段说明|订单) {String} print_total 打印份数
    * @apiSuccess (字段说明|订单) {String} pay_money 支付金额
    * @apiSuccess (字段说明|订单) {String} pay_type 支付类型
    * @apiSuccess (字段说明|订单) {String} pay_status 支付状态
    * @apiSuccess (字段说明|订单) {String} pay_time 支付时间
    * @apiSuccess (字段说明|订单) {String} order_status 订单状态
    * @apiSuccess (字段说明|订单) {String} create_time 创建时间
-   * @apiSuccess (字段说明|) {Number} id 编号
-   * @apiSuccess (字段说明|) {String} code 代码
-   * @apiSuccess (字段说明|) {String} title 名称
-   * @apiSuccess (字段说明|) {String} picture 图片
-   * @apiSuccess (字段说明|) {String} content 内容
-   * @apiSuccess (字段说明|) {String} money 价格
-   * @apiSuccess (字段说明|) {String} point_total 集数
-   * @apiSuccess (字段说明|) {String} watch_total 观看总数
-   * @apiSuccess (字段说明|) {String} is_shelf 是否上架
-   * @apiSuccess (字段说明|) {String} is_trial 是否试看
-   * @apiSuccess (字段说明|) {String} is_recommend 是否推荐
+   * @apiSuccess (字段说明|店长) {String} id 店长自增编号
+   * @apiSuccess (字段说明|店长) {String} nickanme 店长姓名
+   * @apiSuccess (字段说明|打印机) {String} id 打印机自增编号
+   * @apiSuccess (字段说明|打印机) {String} code 打印机编号
+   * @apiSuccess (字段说明|打印机) {String} model 打印机型号
+   * @apiSuccess (字段说明|打印机) {String} address 打印机地址
    *
    * @apiSampleRequest /api/organization/order/view/{id}
    * @apiVersion 1.0.0

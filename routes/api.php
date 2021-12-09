@@ -64,11 +64,6 @@ $api->version('v1', [
         $api->group(['prefix' => 'notify'], function ($api) {
           $api->any('wechat', 'NotifyController@wechat');
         });
-
-        // 支付类型路由
-        $api->group(['prefix' => 'pay'], function ($api) {
-          $api->post('data', 'PayController@data');
-        });
       });
 
 
@@ -206,7 +201,6 @@ $api->version('v1', [
               });
             });
           });
-
 
 
           // 机构投诉路由
