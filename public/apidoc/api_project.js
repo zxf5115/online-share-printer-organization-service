@@ -3,13 +3,13 @@ define({
   "version": "1.0.0",
   "description": "为共享打印机机构端提供接口",
   "title": "共享打印机平台接口文档",
-  "url": "http://organization.print.com",
+  "url": "https://organization.vstown.cc",
   "sampleUrl": false,
   "defaultVersion": "0.0.0",
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2021-12-08T10:43:23.247Z",
+    "time": "2021-12-15T10:16:10.832Z",
     "url": "http://apidocjs.com",
     "version": "0.20.1"
   }

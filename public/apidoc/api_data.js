@@ -2758,8 +2758,64 @@ define({ "api": [
             "group": "字段说明|订单",
             "type": "String",
             "optional": false,
+            "field": "first_level_agent_id",
+            "description": "<p>一级代理商自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "second_level_agent_id",
+            "description": "<p>二级代理商自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "manager_id",
+            "description": "<p>店长自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "printer_id",
+            "description": "<p>打印机自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
             "field": "member_id",
-            "description": "<p>机构编号</p>"
+            "description": "<p>会员编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>打印类型</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>打印文件名称</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "page_total",
+            "description": "<p>文件页数</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "print_total",
+            "description": "<p>打印份数</p>"
           },
           {
             "group": "字段说明|订单",
@@ -2804,83 +2860,50 @@ define({ "api": [
             "description": "<p>创建时间</p>"
           }
         ],
-        "字段说明|": [
+        "字段说明|店长": [
           {
-            "group": "字段说明|",
-            "type": "Number",
+            "group": "字段说明|店长",
+            "type": "String",
             "optional": false,
             "field": "id",
-            "description": "<p>编号</p>"
+            "description": "<p>店长自增编号</p>"
           },
           {
-            "group": "字段说明|",
+            "group": "字段说明|店长",
+            "type": "String",
+            "optional": false,
+            "field": "nickanme",
+            "description": "<p>店长姓名</p>"
+          }
+        ],
+        "字段说明|打印机": [
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>打印机自增编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
             "type": "String",
             "optional": false,
             "field": "code",
-            "description": "<p>代码</p>"
+            "description": "<p>打印机编号</p>"
           },
           {
-            "group": "字段说明|",
+            "group": "字段说明|打印机",
             "type": "String",
             "optional": false,
-            "field": "title",
-            "description": "<p>名称</p>"
+            "field": "model",
+            "description": "<p>打印机型号</p>"
           },
           {
-            "group": "字段说明|",
+            "group": "字段说明|打印机",
             "type": "String",
             "optional": false,
-            "field": "picture",
-            "description": "<p>图片</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "content",
-            "description": "<p>内容</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "money",
-            "description": "<p>价格</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "point_total",
-            "description": "<p>集数</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "watch_total",
-            "description": "<p>观看总数</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "is_shelf",
-            "description": "<p>是否上架</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "is_trial",
-            "description": "<p>是否试看</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "is_recommend",
-            "description": "<p>是否推荐</p>"
+            "field": "address",
+            "description": "<p>打印机地址</p>"
           }
         ]
       }
@@ -2960,8 +2983,64 @@ define({ "api": [
             "group": "字段说明|订单",
             "type": "String",
             "optional": false,
+            "field": "first_level_agent_id",
+            "description": "<p>一级代理商自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "second_level_agent_id",
+            "description": "<p>二级代理商自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "manager_id",
+            "description": "<p>店长自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "printer_id",
+            "description": "<p>打印机自增编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
             "field": "member_id",
-            "description": "<p>机构编号</p>"
+            "description": "<p>会员编号</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>打印类型</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>打印文件名称</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "page_total",
+            "description": "<p>文件页数</p>"
+          },
+          {
+            "group": "字段说明|订单",
+            "type": "String",
+            "optional": false,
+            "field": "print_total",
+            "description": "<p>打印份数</p>"
           },
           {
             "group": "字段说明|订单",
@@ -3006,83 +3085,50 @@ define({ "api": [
             "description": "<p>创建时间</p>"
           }
         ],
-        "字段说明|": [
+        "字段说明|店长": [
           {
-            "group": "字段说明|",
-            "type": "Number",
+            "group": "字段说明|店长",
+            "type": "String",
             "optional": false,
             "field": "id",
-            "description": "<p>编号</p>"
+            "description": "<p>店长自增编号</p>"
           },
           {
-            "group": "字段说明|",
+            "group": "字段说明|店长",
+            "type": "String",
+            "optional": false,
+            "field": "nickanme",
+            "description": "<p>店长姓名</p>"
+          }
+        ],
+        "字段说明|打印机": [
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>打印机自增编号</p>"
+          },
+          {
+            "group": "字段说明|打印机",
             "type": "String",
             "optional": false,
             "field": "code",
-            "description": "<p>代码</p>"
+            "description": "<p>打印机编号</p>"
           },
           {
-            "group": "字段说明|",
+            "group": "字段说明|打印机",
             "type": "String",
             "optional": false,
-            "field": "title",
-            "description": "<p>名称</p>"
+            "field": "model",
+            "description": "<p>打印机型号</p>"
           },
           {
-            "group": "字段说明|",
+            "group": "字段说明|打印机",
             "type": "String",
             "optional": false,
-            "field": "picture",
-            "description": "<p>图片</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "content",
-            "description": "<p>内容</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "money",
-            "description": "<p>价格</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "point_total",
-            "description": "<p>集数</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "watch_total",
-            "description": "<p>观看总数</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "is_shelf",
-            "description": "<p>是否上架</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "is_trial",
-            "description": "<p>是否试看</p>"
-          },
-          {
-            "group": "字段说明|",
-            "type": "String",
-            "optional": false,
-            "field": "is_recommend",
-            "description": "<p>是否推荐</p>"
+            "field": "address",
+            "description": "<p>打印机地址</p>"
           }
         ]
       }
