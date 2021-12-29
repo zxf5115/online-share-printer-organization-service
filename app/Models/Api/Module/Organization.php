@@ -37,30 +37,31 @@ class Organization extends Common
    * @author zhangxiaofei [<1326336909@qq.com>]
    * @dateTime 2021-07-01
    * ------------------------------------------
-   * 自动注册
+   * 注册
    * ------------------------------------------
    *
-   * 自动注册
+   * 注册
    *
    * @return [type]
    */
-  public static function register($param, $value)
+  public static function register($request)
   {
     DB::beginTransaction();
 
     try
     {
-      $model = self::firstOrNew([$param => $value]);
+      $model = self::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
 
-      $model->nickname = Parameter::NICKNAME . '_' . time();
-      $model->role_id  = 1;
-      $model->avatar   = Parameter::AVATER;
-      $model->password = self::generate(Parameter::PASSWORD);
+      $model->open_id  = $request->open_id ?? '';
+      $model->role_id  = 3;
+      $model->avatar   = $request->avatar ?? '';
+      $model->username = '';
+      $model->nickname = $request->nickname ?? '';
       $model->save();
 
       $data = [
-        'sex'         => 1,
-        'age'         => 1,
+        'sex'         => $request->sex ?? '1',
+        'age'         => $request->age ?? '1',
         'province_id' => $request->province_id ?? '',
         'city_id'     => $request->city_id ?? '',
         'region_id'   => $request->region_id ?? '',
@@ -82,6 +83,8 @@ class Organization extends Common
         $model->asset()->delete();
         $model->asset()->create($data);
       }
+
+      return $model;
 
       DB::commit();
     }

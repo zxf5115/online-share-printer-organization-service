@@ -454,6 +454,7 @@ class OrganizationController extends BaseController
    *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
    * }
    *
+   * @apiParam {int} page 当前页数
    * @apiParam {int} id 机构编号
    * @apiParam {int} role_id 角色类型 3下级代理商 2下级店长
    * @apiParam {int} asset_create_time 提现时间
@@ -515,6 +516,7 @@ class OrganizationController extends BaseController
    *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
    * }
    *
+   * @apiParam {int} page 当前页数
    * @apiParam {int} id 机构编号
    * @apiParam {int} role_id 角色类型 3下级代理商 2下级店长
    * @apiParam {int} create_time 提现时间

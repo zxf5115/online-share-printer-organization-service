@@ -176,6 +176,62 @@
             "optional": false,
             "field": "open_id",
             "description": "<p>微信OpenID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "avatar",
+            "description": "<p>会员头像</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "nickname",
+            "description": "<p>会员姓名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "sex",
+            "description": "<p>会员性别</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "age",
+            "description": "<p>会员性别</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "province_id",
+            "description": "<p>省</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "city_id",
+            "description": "<p>市</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "region_id",
+            "description": "<p>县</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "address",
+            "description": "<p>详细地址</p>"
           }
         ]
       }
@@ -1827,6 +1883,13 @@
             "group": "Parameter",
             "type": "int",
             "optional": false,
+            "field": "page",
+            "description": "<p>当前页数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
             "field": "id",
             "description": "<p>机构编号</p>"
           },
@@ -2002,6 +2065,13 @@
     "parameter": {
       "fields": {
         "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "page",
+            "description": "<p>当前页数</p>"
+          },
           {
             "group": "Parameter",
             "type": "int",
