@@ -95,6 +95,41 @@ class Member extends Common
   }
 
 
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-06-10
+   * ------------------------------------------
+   * 获取openid
+   * ------------------------------------------
+   *
+   * 获取openid
+   *
+   * @param string $code [description]
+   * @return [type]
+   */
+  public static function  getUserOpenId($code)
+  {
+    $param = [];
+
+    $param[] = 'appid=' . getenv('WEIXIN_KEY');
+    $param[] = 'secret=' . getenv('WEIXIN_SECRET');
+    $param[] = 'js_code=' . $code;
+    $param[] = 'grant_type=authorization_code';
+
+    $params = implode('&', $param);    //用&符号连起来
+
+    $url = getenv('WEIXIN_URI') . '?' . $params;
+
+    //请求接口
+    $client = new \GuzzleHttp\Client([
+        'timeout' => 60
+    ]);
+
+    $res = $client->request('GET', $url);
+
+    //openid和session_key
+    return json_decode($res->getBody()->getContents(), true);
+  }
 
 
   // 关联函数 ------------------------------------------------------
