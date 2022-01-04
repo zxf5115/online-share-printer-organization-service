@@ -83,9 +83,9 @@ class Organization extends Common
         $model->asset()->create($data);
       }
 
-      return $model;
-
       DB::commit();
+
+      return $model;
     }
     catch(\Exception $e)
     {
