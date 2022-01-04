@@ -82,6 +82,8 @@ class Member extends Common
         $model->asset()->create($data);
       }
 
+      return $model;
+
       DB::commit();
     }
     catch(\Exception $e)
