@@ -20,7 +20,6 @@ class Organization extends Common
   // 隐藏的属性
   public $hidden = [
     'organization_id',
-    'open_id',
     'password',
     'password_salt',
     'remember_token',
@@ -44,15 +43,15 @@ class Organization extends Common
    *
    * @return [type]
    */
-  public static function register($request)
+  public static function register($request, $open_id)
   {
     DB::beginTransaction();
 
     try
     {
-      $model = self::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
+      $model = self::firstOrNew(['open_id' => $open_id, 'status' => 1]);
 
-      $model->open_id  = $request->open_id ?? '';
+      $model->open_id  = $open_id ?? '';
       $model->role_id  = 3;
       $model->avatar   = $request->avatar ?? '';
       $model->username = '';
