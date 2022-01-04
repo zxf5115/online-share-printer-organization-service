@@ -111,14 +111,14 @@ class Member extends Common
   {
     $param = [];
 
-    $param[] = 'appid=' . getenv('WEIXIN_KEY');
-    $param[] = 'secret=' . getenv('WEIXIN_SECRET');
+    $param[] = 'appid=' . config('weixin.weixin_key');
+    $param[] = 'secret=' . config('weixin.weixin_secret');
     $param[] = 'js_code=' . $code;
     $param[] = 'grant_type=authorization_code';
 
     $params = implode('&', $param);    //用&符号连起来
 
-    $url = getenv('WEIXIN_URI') . '?' . $params;
+    $url = config('weixin.weixin_openid_url') . '?' . $params;
 
     //请求接口
     $client = new \GuzzleHttp\Client([
