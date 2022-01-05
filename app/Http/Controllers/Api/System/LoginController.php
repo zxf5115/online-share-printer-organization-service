@@ -89,6 +89,8 @@ class LoginController extends BaseController
         if(is_null($response))
         {
           $response = $this->_model::register($request, $data['openid']);
+
+          $response = $response->with('parent');
         }
 
         // 用户已禁用
