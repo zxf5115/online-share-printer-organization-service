@@ -83,7 +83,7 @@ class LoginController extends BaseController
 
         $where = array_merge($condition, $where);
 
-        $response = $this->_model::getRow($where);
+        $response = $this->_model::getRow($where, ['parent']);
 
         // 用户不存在
         if(is_null($response))
