@@ -3,7 +3,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Http\Constant\Code;
-use App\Models\Api\Module\Member;
+use App\Models\Api\Module\Organization;
 
 /**
  * 会员失效
@@ -32,7 +32,7 @@ class FailureRequest
         'status' => 1
       ];
 
-      $result = Member::getRow($where);
+      $result = Organization::getRow($where);
 
       if(empty($result->id))
       {
