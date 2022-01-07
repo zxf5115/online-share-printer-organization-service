@@ -99,6 +99,12 @@ class LoginController extends BaseController
           return self::error(Code::MEMBER_DISABLE);
         }
 
+        // 数据不完整
+        if(empty($response->username))
+        {
+          return self::error(Code::DATA_DEFICIENCY);
+        }
+
         // 在特定时间内访问次数过多，就触发访问限制
         if($this->_model::AccessRestrictions($response))
         {
