@@ -162,8 +162,6 @@ class ObtainController extends BaseController
 
       $response = $this->_model::getPaging($condition, $relevance, $this->_order, true);
 
-      $response = self::allocation($response, 'datetime');
-
       return self::success($response);
     }
     catch(\Exception $e)
@@ -241,8 +239,6 @@ class ObtainController extends BaseController
       $relevance = self::getRelevanceData($this->_relevance, 'data');
 
       $response = $this->_model::getPaging($condition, $relevance, $this->_order, true);
-
-      $response = self::allocation($response, 'datetime');
 
       return self::success($response);
     }
