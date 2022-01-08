@@ -141,6 +141,7 @@ $api->version('v1', [
           $api->group(['prefix'  => 'obtain'], function ($api) {
             $api->get('center', 'ObtainController@center');
             $api->get('list', 'ObtainController@list');
+            $api->get('data', 'ObtainController@data');
           });
 
           // 机构提现路由
