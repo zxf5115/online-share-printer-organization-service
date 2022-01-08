@@ -76,8 +76,10 @@ class Obtain extends Common
 
       if(!empty($request['create_time']))
       {
-        $where[] = ['create_time', '>=', $request['create_time'][0]];
-        $where[] = ['create_time', '<=', $request['create_time'][1]];
+        $create_time = json_decode($request['create_time']);
+
+        $where[] = ['create_time', '>=', $create_time[0]];
+        $where[] = ['create_time', '<=', $create_time[1]];
       }
 
       $result = self::getPluck('money', $where, false, false, true);
