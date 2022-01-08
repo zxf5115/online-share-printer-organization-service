@@ -2663,110 +2663,8 @@
   },
   {
     "type": "get",
-    "url": "/api/organization/obtain/list",
-    "title": "02. 我的收益列表",
-    "description": "<p>获取当前会员的收益列表</p>",
-    "group": "22._机构收益模块",
-    "permission": [
-      {
-        "name": "jwt"
-      }
-    ],
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": "<p>身份令牌</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "create_time",
-            "description": "<p>提现时间</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n  \"create_time\": [\n    \"2021-05-05 17:01:01\",\n    \"2021-07-07 17:01:10\"\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "字段说明": [
-          {
-            "group": "字段说明",
-            "type": "String",
-            "optional": false,
-            "field": "type",
-            "description": "<p>收益自增编号</p>"
-          },
-          {
-            "group": "字段说明",
-            "type": "String",
-            "optional": false,
-            "field": "order_id",
-            "description": "<p>收益订单自增编号</p>"
-          },
-          {
-            "group": "字段说明",
-            "type": "String",
-            "optional": false,
-            "field": "money",
-            "description": "<p>收益金额</p>"
-          },
-          {
-            "group": "字段说明",
-            "type": "String",
-            "optional": false,
-            "field": "create_time",
-            "description": "<p>收益时间</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success:",
-          "content": "[\n  {\n    time: '时间',\n    money: '收益',\n    data: [\n      {id:4,...},\n      {id:5,...},\n    ]\n  },{\n    time: '时间',\n    money: '收益',\n    data: [\n      {id:4,...},\n      {id:5,...},\n    ]\n  },\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "sampleRequest": [
-      {
-        "url": "/api/organization/obtain/list"
-      }
-    ],
-    "version": "1.0.0",
-    "filename": "app/Http/Controllers/Api/Module/Organization/ObtainController.php",
-    "groupTitle": "22._机构收益模块",
-    "name": "GetApiOrganizationObtainList"
-  },
-  {
-    "type": "get",
-    "url": "/api/organization/obtain/list",
-    "title": "02. 某个收益列表",
+    "url": "/api/organization/obtain/data",
+    "title": "03. 某个收益列表",
     "description": "<p>获取某个会员的收益列表</p>",
     "group": "22._机构收益模块",
     "permission": [
@@ -2865,6 +2763,108 @@
     "sampleRequest": [
       {
         "url": "/api/organization/obtain/data"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/ObtainController.php",
+    "groupTitle": "22._机构收益模块",
+    "name": "GetApiOrganizationObtainData"
+  },
+  {
+    "type": "get",
+    "url": "/api/organization/obtain/list",
+    "title": "02. 我的收益列表",
+    "description": "<p>获取当前会员的收益列表</p>",
+    "group": "22._机构收益模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>提现时间</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"create_time\": [\n    \"2021-05-05 17:01:01\",\n    \"2021-07-07 17:01:10\"\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "字段说明": [
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>收益自增编号</p>"
+          },
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "order_id",
+            "description": "<p>收益订单自增编号</p>"
+          },
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "money",
+            "description": "<p>收益金额</p>"
+          },
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "create_time",
+            "description": "<p>收益时间</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success:",
+          "content": "[\n  {\n    time: '时间',\n    money: '收益',\n    data: [\n      {id:4,...},\n      {id:5,...},\n    ]\n  },{\n    time: '时间',\n    money: '收益',\n    data: [\n      {id:4,...},\n      {id:5,...},\n    ]\n  },\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/obtain/list"
       }
     ],
     "version": "1.0.0",

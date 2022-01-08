@@ -176,7 +176,7 @@ class ObtainController extends BaseController
   }
 
   /**
-   * @api {get} /api/organization/obtain/list 02. 某个收益列表
+   * @api {get} /api/organization/obtain/data 03. 某个收益列表
    * @apiDescription 获取某个会员的收益列表
    * @apiGroup 22. 机构收益模块
    * @apiPermission jwt
