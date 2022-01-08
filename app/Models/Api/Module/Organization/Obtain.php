@@ -78,8 +78,11 @@ class Obtain extends Common
       {
         $create_time = json_decode($request['create_time']);
 
-        $where[] = ['create_time', '>=', $create_time[0]];
-        $where[] = ['create_time', '<=', $create_time[1]];
+        $start_time = strtotime($create_time[0]);
+        $end_time = strtotime($create_time[1]);
+
+        $where[] = ['create_time', '>=', $start_time];
+        $where[] = ['create_time', '<=', $end_time];
       }
 
       $result = self::getPluck('money', $where, false, false, true);
