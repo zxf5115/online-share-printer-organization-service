@@ -294,7 +294,7 @@ class OrderController extends BaseController
           return self::error(Code::CURRENT_ORDER_NO_CANCEL);
         }
 
-        $model->order_status = 3;
+        $model->order_status = 4;
         $model->save();
 
         DB::commit();
@@ -379,7 +379,7 @@ class OrderController extends BaseController
           return self::error(Code::CURRENT_ORDER_NO_CANCEL);
         }
 
-        $model->order_status = 3;
+        $model->order_status = 5;
         $model->save();
 
         DB::commit();
