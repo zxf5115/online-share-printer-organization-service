@@ -23,6 +23,7 @@ class OrderController extends BaseController
   protected $_relevance = [
     'manager',
     'printer',
+    'price'
   ];
 
 
