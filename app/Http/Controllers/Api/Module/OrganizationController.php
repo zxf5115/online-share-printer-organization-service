@@ -44,7 +44,10 @@ class OrganizationController extends BaseController
       'archive',
     ],
     'data' => [
-      'asset'
+      'archive',
+      'asset',
+      'parent',
+      'printer',
     ],
     'subordinate' => [
       'asset'
