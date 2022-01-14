@@ -53,9 +53,9 @@ class Organization extends Common
 
       $model->open_id  = $open_id ?? '';
       $model->role_id  = 3;
-      $model->avatar   = $request->avatar ?? '';
+      $model->avatar   = Parameter::AVATER;
       $model->username = '';
-      $model->nickname = $request->nickname ?? '';
+      $model->nickname = Parameter::NICKNAME . '_' . time();
       $model->save();
 
       $data = [
@@ -91,6 +91,39 @@ class Organization extends Common
     {
       DB::rollback();
 
+      record($e);
+
+      return false;
+    }
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-01-14
+   * ------------------------------------------
+   * 完善信息
+   * ------------------------------------------
+   *
+   * 完善信息
+   *
+   * @return [type]
+   */
+  public static function complete($request, $open_id)
+  {
+    try
+    {
+      $model = self::firstOrNew(['username' => $request->invite_code, 'status' => 1]);
+
+      $model->open_id  = $open_id ?? '';
+      $model->avatar   = $request->avatar ?? $model->avatar;
+      $model->nickname = $request->nickname ?? $model->nickname;
+      $model->save();
+
+      return true;
+    }
+    catch(\Exception $e)
+    {
       record($e);
 
       return false;

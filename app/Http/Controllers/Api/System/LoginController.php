@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Constant\Code;
 use App\Models\Api\Module\Member;
+use App\Models\Api\Module\Organization;
 use App\Http\Controllers\Api\BaseController;
 
 
@@ -25,6 +26,7 @@ class LoginController extends BaseController
    * @apiDescription 通过第三方软件-微信，进行登录
    * @apiGroup 01. 登录模块
    *
+   * @apiParam {string} [invite_code] 邀请码
    * @apiParam {string} code 微信code
    * @apiParam {string} avatar 会员头像
    * @apiParam {string} nickname 会员姓名
@@ -70,6 +72,9 @@ class LoginController extends BaseController
     {
       try
       {
+        // 如果存在邀请码
+        $invite_code = $request->invite_code ?? 0;
+
         $data = Member::getUserOpenId($request->code);
 
         if(empty($data) || empty($data['openid']))
@@ -79,18 +84,33 @@ class LoginController extends BaseController
 
         $condition = self::getSimpleWhereData();
 
-        $where = ['open_id' => $data['openid']];
+        if(empty($invite_code))
+        {
+          $where = ['open_id' => $data['openid']];
+        }
+        else
+        {
+          $where = ['username' => $invite_code];
+        }
 
         $where = array_merge($condition, $where);
 
-        $response = $this->_model::getRow($where, ['parent']);
+        $response = Organization::getRow($where, ['parent']);
 
         // 用户不存在
         if(is_null($response))
         {
-          $response = $this->_model::register($request, $data['openid']);
+          $result = Organization::register($request, $data['openid']);
 
-          $response = $response->with('parent');
+          $response = Organization::getRow(['id' => $result->id], 'parent');
+        }
+
+        // 如果存在邀请码
+        if(!empty($invite_code))
+        {
+          Organization::complete($request, $data['openid']);
+
+          $response = Organization::getRow(['id' => $response->id], 'parent');
         }
 
         // 用户已禁用
@@ -106,7 +126,7 @@ class LoginController extends BaseController
         }
 
         // 在特定时间内访问次数过多，就触发访问限制
-        if($this->_model::AccessRestrictions($response))
+        if(Organization::AccessRestrictions($response))
         {
           return self::error(Code::ACCESS_RESTRICTIONS);
         }
@@ -128,7 +148,7 @@ class LoginController extends BaseController
         }
 
         // 记录登录信息
-        $this->_model::login($response, $request);
+        Organization::login($response, $request);
 
         return self::success([
           'code' => 200,
@@ -195,7 +215,7 @@ class LoginController extends BaseController
 
       try
       {
-        $model = $this->_model::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
+        $model = Organization::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
 
         $model->open_id  = $request->open_id ?? '';
         $model->role_id  = 3;
@@ -284,7 +304,7 @@ class LoginController extends BaseController
       {
         $condition = self::getSimpleWhereData($request->open_id, 'open_id');
 
-        $model = $this->_model::getRow($condition);
+        $model = Organization::getRow($condition);
 
         if(empty($model->id))
         {

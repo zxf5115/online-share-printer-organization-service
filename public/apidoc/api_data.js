@@ -173,6 +173,13 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "string",
+            "optional": true,
+            "field": "invite_code",
+            "description": "<p>邀请码</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
             "optional": false,
             "field": "code",
             "description": "<p>微信code</p>"
