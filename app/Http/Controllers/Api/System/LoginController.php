@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Constant\Code;
 use App\Models\Api\Module\Member;
-use App\Models\Api\Module\Organization;
 use App\Http\Controllers\Api\BaseController;
 
 
@@ -95,22 +94,22 @@ class LoginController extends BaseController
 
         $where = array_merge($condition, $where);
 
-        $response = Organization::getRow($where, ['parent']);
+        $response = $this->_model::getRow($where, ['parent']);
 
         // 用户不存在
         if(is_null($response))
         {
-          $result = Organization::register($request, $data['openid']);
+          $result = $this->_model::register($request, $data['openid']);
 
-          $response = Organization::getRow(['id' => $result->id], 'parent');
+          $response = $this->_model::getRow(['id' => $result->id], 'parent');
         }
 
         // 如果存在邀请码
         if(!empty($invite_code))
         {
-          Organization::complete($request, $data['openid']);
+          $this->_model::complete($request, $data['openid']);
 
-          $response = Organization::getRow(['id' => $response->id], 'parent');
+          $response = $this->_model::getRow(['id' => $response->id], 'parent');
         }
 
         // 用户已禁用
@@ -126,7 +125,7 @@ class LoginController extends BaseController
         }
 
         // 在特定时间内访问次数过多，就触发访问限制
-        if(Organization::AccessRestrictions($response))
+        if($this->_model::AccessRestrictions($response))
         {
           return self::error(Code::ACCESS_RESTRICTIONS);
         }
@@ -148,7 +147,7 @@ class LoginController extends BaseController
         }
 
         // 记录登录信息
-        Organization::login($response, $request);
+        $this->_model::login($response, $request);
 
         return self::success([
           'code' => 200,
@@ -215,7 +214,7 @@ class LoginController extends BaseController
 
       try
       {
-        $model = Organization::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
+        $model = $this->_model::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
 
         $model->open_id  = $request->open_id ?? '';
         $model->role_id  = 3;
@@ -304,7 +303,7 @@ class LoginController extends BaseController
       {
         $condition = self::getSimpleWhereData($request->open_id, 'open_id');
 
-        $model = Organization::getRow($condition);
+        $model = $this->_model::getRow($condition);
 
         if(empty($model->id))
         {
