@@ -82,19 +82,19 @@ class AgreementController extends BaseController
       // 平台核心数据Reids Key
       $key = RedisKey::AGREEMENT;
 
-      if(Redis::hexists($key, 'user'))
+      if(Redis::hexists($key, 'organization_user'))
       {
-        $data = Redis::hget($key, 'user');
+        $data = Redis::hget($key, 'organization_user');
 
         $response = unserialize($data);
       }
       else
       {
-        $response = $this->_model::getRow(['title' => 'user']);
+        $response = $this->_model::getRow(['title' => 'organization_user']);
 
         $data = serialize($response);
 
-        Redis::hset($key, 'user', $data);
+        Redis::hset($key, 'organization_user', $data);
       }
 
       return self::success($response);
@@ -126,19 +126,19 @@ class AgreementController extends BaseController
       // 平台核心数据Reids Key
       $key = RedisKey::AGREEMENT;
 
-      if(Redis::hexists($key, 'employ'))
+      if(Redis::hexists($key, 'organization_employ'))
       {
-        $data = Redis::hget($key, 'employ');
+        $data = Redis::hget($key, 'organization_employ');
 
         $response = unserialize($data);
       }
       else
       {
-        $response = $this->_model::getRow(['title' => 'employ']);
+        $response = $this->_model::getRow(['title' => 'organization_employ']);
 
         $data = serialize($response);
 
-        Redis::hset($key, 'user', $data);
+        Redis::hset($key, 'organization_employ', $data);
       }
 
       return self::success($response);
@@ -170,19 +170,19 @@ class AgreementController extends BaseController
       // 平台核心数据Reids Key
       $key = RedisKey::AGREEMENT;
 
-      if(Redis::hexists($key, 'privacy'))
+      if(Redis::hexists($key, 'organization_privacy'))
       {
-        $data = Redis::hget($key, 'privacy');
+        $data = Redis::hget($key, 'organization_privacy');
 
         $response = unserialize($data);
       }
       else
       {
-        $response = $this->_model::getRow(['title' => 'privacy']);
+        $response = $this->_model::getRow(['title' => 'organization_privacy']);
 
         $data = serialize($response);
 
-        Redis::hset($key, 'privacy', $data);
+        Redis::hset($key, 'organization_privacy', $data);
       }
 
       return self::success($response);
@@ -214,19 +214,19 @@ class AgreementController extends BaseController
       // 平台核心数据Reids Key
       $key = RedisKey::AGREEMENT;
 
-      if(Redis::hexists($key, 'liability'))
+      if(Redis::hexists($key, 'organization_liability'))
       {
-        $data = Redis::hget($key, 'liability');
+        $data = Redis::hget($key, 'organization_liability');
 
         $response = unserialize($data);
       }
       else
       {
-        $response = $this->_model::getRow(['title' => 'liability']);
+        $response = $this->_model::getRow(['title' => 'organization_liability']);
 
         $data = serialize($response);
 
-        Redis::hset($key, 'liability', $data);
+        Redis::hset($key, 'organization_liability', $data);
       }
 
       return self::success($response);
