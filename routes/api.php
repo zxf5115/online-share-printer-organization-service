@@ -45,6 +45,11 @@ $api->version('v1', [
           $api->get('list', 'AreaController@list');
         });
 
+        // 银行路由
+        $api->group(['prefix' => 'bank'], function ($api) {
+          $api->get('list', 'BankController@list');
+        });
+
         // 联系方式路由
         $api->group(['prefix' => 'service'], function ($api) {
           $api->get('data', 'ServiceController@data');
@@ -135,6 +140,12 @@ $api->version('v1', [
           $api->group(['prefix'  => 'asset'], function ($api) {
             $api->get('data', 'AssetController@data');
             $api->get('equipment', 'AssetController@equipment');
+          });
+
+          // 机构银行路由
+          $api->group(['prefix'  => 'bank'], function ($api) {
+            $api->get('data', 'BankController@data');
+            $api->post('handle', 'BankController@handle');
           });
 
           // 机构收益模块路由

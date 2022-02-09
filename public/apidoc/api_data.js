@@ -507,6 +507,22 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/api/common/bank/list",
+    "title": "09. 地区列表",
+    "description": "<p>获取全国地区列表</p>",
+    "group": "02._公共模块",
+    "sampleRequest": [
+      {
+        "url": "/api/common/bank/list"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Common/BankController.php",
+    "groupTitle": "02._公共模块",
+    "name": "GetApiCommonBankList"
+  },
+  {
+    "type": "get",
     "url": "/api/system/kernel",
     "title": "01. 系统信息",
     "description": "<p>获取系统配置内容信息</p>",
@@ -3967,6 +3983,156 @@ define({ "api": [
     "filename": "app/Http/Controllers/Api/Module/Organization/ComplainController.php",
     "groupTitle": "25._机构投诉模块",
     "name": "PostApiOrganizationComplainHandle"
+  },
+  {
+    "type": "get",
+    "url": "/api/organization/bank/data",
+    "title": "01. 我的银行卡详情",
+    "description": "<p>获取当前机构银行卡详情</p>",
+    "group": "26._机构银行模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "字段说明|打印机": [
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "company_name",
+            "description": "<p>公司名称</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "open_bank_name",
+            "description": "<p>开户行名称</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "branch_bank_name",
+            "description": "<p>支行名称</p>"
+          },
+          {
+            "group": "字段说明|打印机",
+            "type": "String",
+            "optional": false,
+            "field": "card_no",
+            "description": "<p>银行卡号</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/bank/data"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/BankController.php",
+    "groupTitle": "26._机构银行模块",
+    "name": "GetApiOrganizationBankData"
+  },
+  {
+    "type": "post",
+    "url": "/api/organization/bank/handle",
+    "title": "02. 操作银行卡",
+    "description": "<p>当前机构操作银行卡</p>",
+    "group": "26._机构银行模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "company_name",
+            "description": "<p>公司名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "open_bank_name",
+            "description": "<p>开户行名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "branch_bank_name",
+            "description": "<p>支行名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "card_no",
+            "description": "<p>银行卡号</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/bank/handle"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/BankController.php",
+    "groupTitle": "26._机构银行模块",
+    "name": "PostApiOrganizationBankHandle"
   },
   {
     "type": "get",
