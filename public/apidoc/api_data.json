@@ -508,7 +508,7 @@
   {
     "type": "get",
     "url": "/api/common/bank/list",
-    "title": "09. 地区列表",
+    "title": "09. 银行列表",
     "description": "<p>获取全国地区列表</p>",
     "group": "02._公共模块",
     "sampleRequest": [

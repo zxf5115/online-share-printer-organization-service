@@ -26,7 +26,7 @@ class BankController extends BaseController
 
 
   /**
-   * @api {get} /api/common/bank/list 09. 地区列表
+   * @api {get} /api/common/bank/list 09. 银行列表
    * @apiDescription 获取全国地区列表
    * @apiGroup 02. 公共模块
    *
