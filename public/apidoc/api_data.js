@@ -688,7 +688,7 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/api/common/service/data",
+    "url": "/api/common/withdrawal/data",
     "title": "10. 提现配置",
     "description": "<p>获取提现配置信息</p>",
     "group": "02._公共模块",
@@ -714,13 +714,13 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "/api/common/service/data"
+        "url": "/api/common/withdrawal/data"
       }
     ],
     "version": "1.0.0",
     "filename": "app/Http/Controllers/Api/Module/Common/WithdrawalController.php",
     "groupTitle": "02._公共模块",
-    "name": "PostApiCommonServiceData"
+    "name": "PostApiCommonWithdrawalData"
   },
   {
     "type": "post",

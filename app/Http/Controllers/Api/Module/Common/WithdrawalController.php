@@ -25,14 +25,14 @@ class WithdrawalController extends BaseController
 
 
   /**
-   * @api {post} /api/common/service/data 10. 提现配置
+   * @api {post} /api/common/withdrawal/data 10. 提现配置
    * @apiDescription 获取提现配置信息
    * @apiGroup 02. 公共模块
    *
    * @apiSuccess (basic params) {String} withdrawal_rate 提现税率(百分比)
    * @apiSuccess (basic params) {String} minimum_amount 最低提现金额
    *
-   * @apiSampleRequest /api/common/service/data
+   * @apiSampleRequest /api/common/withdrawal/data
    * @apiVersion 1.0.0
    */
   public function data(Request $request)

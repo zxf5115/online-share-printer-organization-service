@@ -55,6 +55,11 @@ $api->version('v1', [
           $api->get('data', 'ServiceController@data');
         });
 
+        // 提现设置路由
+        $api->group(['prefix' => 'withdrawal'], function ($api) {
+          $api->get('data', 'WithdrawalController@data');
+        });
+
         // 系统协议路由
         $api->group(['prefix' => 'agreement'], function ($api) {
           $api->get('about', 'AgreementController@about');
