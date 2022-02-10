@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\Api\Module\Organization;
 
+use App\Models\Common\System\Config;
 use App\Models\Common\Module\Organization\Withdrawal as Common;
 
 /**
@@ -20,4 +21,28 @@ class Withdrawal extends Common
     'status',
     'update_time'
   ];
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-02-10
+   * ------------------------------------------
+   * 得到税后金额
+   * ------------------------------------------
+   *
+   * 机构提现计算税点，得到税后金额
+   *
+   * @param [type] $money 税前金额
+   * @return [type]
+   */
+  public static function getAfterTaxAmount($money)
+  {
+    $rate = Config::getConfigValue('withdrawal_rate');
+
+    $rate = bcdiv($rate, 100, 2);
+
+    $rate = bcsub(1, $rate, 2);
+
+    return bcmul($money, $rate, 2);
+  }
 }

@@ -62,6 +62,11 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Api\Member\MoneyListeners',
         ],
 
+        // 提现金额流向
+        'App\Events\Api\Member\WithdrawalEvent' => [
+            'App\Listeners\Api\Member\WithdrawalListeners',
+        ],
+
 
         // 支付
         'App\Events\Api\Member\PayEvent' => [

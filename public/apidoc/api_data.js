@@ -688,6 +688,42 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/api/common/service/data",
+    "title": "10. 提现配置",
+    "description": "<p>获取提现配置信息</p>",
+    "group": "02._公共模块",
+    "success": {
+      "fields": {
+        "basic params": [
+          {
+            "group": "basic params",
+            "type": "String",
+            "optional": false,
+            "field": "withdrawal_rate",
+            "description": "<p>提现税率(百分比)</p>"
+          },
+          {
+            "group": "basic params",
+            "type": "String",
+            "optional": false,
+            "field": "minimum_amount",
+            "description": "<p>最低提现金额</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/common/service/data"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Common/WithdrawalController.php",
+    "groupTitle": "02._公共模块",
+    "name": "PostApiCommonServiceData"
+  },
+  {
+    "type": "post",
     "url": "/api/file/file",
     "title": "01. 上传文件",
     "description": "<p>通过base64的内容进行文件上传</p>",

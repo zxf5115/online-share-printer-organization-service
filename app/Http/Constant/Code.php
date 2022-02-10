@@ -80,16 +80,6 @@ class Code
   const CURRENT_ORDER_EMPTY = 90022;
   // 当前订单已支付，无法修改
   const CURRENT_ORDER_NO_CHANGE = 90023;
-  // 当前课程不存在
-  const CURRENT_COURSE_EMPTY = 90022;
-  // 报名时间还未开始
-  const COURSE_APPLY_WAIT = 90023;
-  // 报名时间已经过了
-  const COURSE_APPLY_END = 90024;
-  // 当前课程已购买，无需再次购买
-  const COURSE_EXITS = 90025;
-  // 订单课程不存在
-  const CURRENT_ORDER_COURSE_EXITS = 90026;
 
   // 用户不存在
   const USER_EMPTY  = 9003;
@@ -124,40 +114,15 @@ class Code
   const ATTENTION_MEMBER_EMPTY = 90054;
 
 
-  // 标签不能为空
-  const LABEL_EMPTY = 9005;
+  // 提现成功
+  const WITHDRAWAL_SUCCUESS = 90060;
+  // 提现失败
+  const WITHDRAWAL_ERROR = 90061;
+  // 提现金额不足
+  const WITHDRAWAL_MONEY_DEFICIENCY = 90062;
+  // 提现金额应大于最低提现金额
+  const WITHDRAWAL_MONEY_WANT = 90063;
 
-  // 学员未完成作业
-  const HOMEWORK_EMPTY = 9006;
-
-  // 当前课程类型为永久，无法删除
-  const COURSE_CATEGORY_PERMANENT = 90091;
-  // 当前课程类型未结束，无法删除
-  const COURSE_CATEGORY_OVER = 90092;
-  // 当前课程已完成
-  const COURSE_FINISH = 90093;
-  // 当前知识点已完成
-  const COURSE_POINT_FINISH = 90094;
-  // 当前知识点不存在
-  const COURSE_POINT_EMPTY = 90095;
-  // 当前课程老师已存在
-  const CURRENT_TEACHER_EXIST = 90096;
-
-
-
-  // 课程不存在
-  const COURSE_EMPTY = 9010;
-  const COURSEWARE_ADD_ERROR = 90101;
-
-
-  // 课件不存在
-  const COURSEWARE_EMPTY = 9012;
-
-  // 课件级别不存在
-  const COURSEWARE_LEVEL_EMPTY = 9013;
-
-  // 收货地址不存在
-  const ADDRESS_EMPTY = 9011;
 
 
   // 支付成功
@@ -168,11 +133,10 @@ class Code
   // 金额不足
   const INSUFFICIENT_FUND = 10003;
 
-  // 已经加入购物车
-  const ALREADY_ADD_CART = 10004;
-
   // 数据不完整，请联系平台管理员
   const DATA_DEFICIENCY = 10005;
+
+
 
   public static $message = [
     self::SUCCESS            => '成功',
@@ -247,9 +211,7 @@ class Code
     self::ATTENTION_MEMBER_EMPTY => '被关注用户不存在',
 
 
-    self::LABEL_EMPTY  => '标签不能为空',
 
-    self::HOMEWORK_EMPTY => '学员未完成作业',
 
     self::MEMBER_TARGET_EMPTY => '当前用户未达成条件',
 
@@ -258,32 +220,18 @@ class Code
     self::CURRENT_ORDER_PAY_FINISH => '当前订单已经完成支付，不可以取消',
     self::CURRENT_ORDER_EMPTY => '当前订单不存在',
     self::CURRENT_ORDER_NO_CHANGE => '当前订单已支付，无法修改',
-    self::CURRENT_COURSE_EMPTY => '当前会员课程不存在',
 
 
-    self::COURSE_CATEGORY_PERMANENT => '当前课程类型为永久，无法删除',
-    self::COURSE_CATEGORY_OVER => '当前课程类型未结束，无法删除',
-    self::COURSE_FINISH => '当前课程已经完成',
-    self::COURSE_POINT_FINISH => '当前知识点已完成',
-    self::COURSE_POINT_EMPTY => '当前知识点不存在',
-    self::CURRENT_TEACHER_EXIST => '当前课程老师已存在',
+    self::WITHDRAWAL_SUCCUESS => '提现成功',
+    self::WITHDRAWAL_ERROR => '提现失败',
+    self::WITHDRAWAL_MONEY_DEFICIENCY => '提现金额不足',
+    self::WITHDRAWAL_MONEY_WANT => '提现金额应大于最低提现金额',
 
-
-    self::COURSE_EMPTY => '课程不存在',
-    self::COURSEWARE_ADD_ERROR => '课程添加失败',
-    self::COURSE_APPLY_WAIT => '报名时间还未开始',
-    self::COURSE_APPLY_END => '报名时间已经过了',
-    self::COURSE_EXITS => '当前课程已购买，无需再次购买',
-    self::CURRENT_ORDER_COURSE_EXITS => '当前订单课程不存在',
-    self::COURSEWARE_EMPTY => '课件不存在',
-    self::COURSEWARE_LEVEL_EMPTY => '课件级别不存在',
-    self::ADDRESS_EMPTY => '当前会员收货地址不存在',
 
     self::PAY_SUCCESS => '支付成功',
     self::PAY_ERROR => '支付失败',
 
     self::INSUFFICIENT_FUND => '账户金额不足',
-    self::ALREADY_ADD_CART => '已经加入购物车',
 
     self::DATA_DEFICIENCY => '请联系平台完善资料',
   ];

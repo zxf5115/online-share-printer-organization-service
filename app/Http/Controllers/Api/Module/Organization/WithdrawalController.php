@@ -5,7 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Constant\Code;
+use App\Models\Common\System\Config;
+use App\Events\Api\Member\WithdrawalEvent;
 use App\Http\Controllers\Api\BaseController;
+use App\Models\Api\Module\Organization\Asset;
+use App\Models\Api\Module\Organization\Withdrawal;
 
 
 /**
@@ -150,7 +154,7 @@ class WithdrawalController extends BaseController
   public function handle(Request $request)
   {
     $messages = [
-      'money.required' => '请您输入提现编号',
+      'money.required' => '请您输入提现金额',
     ];
 
     $rule = [
@@ -170,18 +174,44 @@ class WithdrawalController extends BaseController
 
       try
       {
-        $field = self::getCurrentUserQueryField();
+        $member_id = self::getCurrentId();
 
-        $condition = self::getCurrentWhereData($field);
+        // 最低提现金额
+        $minimum_amount = Config::getConfigValue('minimum_amount');
 
-        $where = ['id' => $request->order_id];
+        // 如果提现金额小于最低提现金额，提示提现金额应大于最低提现金额
+        if($request->money < $minimum_amount)
+        {
+          return self::error(Code::WITHDRAWAL_MONEY_WANT);
+        }
 
-        $condition = array_merge($condition, $where);
+        // 获取机构资产信息
+        $asset = Asset::getRow(['member_id' => $member_id]);
 
-        $model = $this->_model::getRow($condition);
+        // 如果没有机构资产，提示提现失败
+        if(empty($asset->money))
+        {
+          return self::error(Code::WITHDRAWAL_ERROR);
+        }
 
-        $model->order_status = 2;
+        // 如果机构资产金额小于最低提现金额，提示金额不足
+        if($asset->money < $minimum_amount)
+        {
+          return self::error(Code::WITHDRAWAL_MONEY_DEFICIENCY);
+        }
+
+        // 税后金额
+        $money = Withdrawal::getAfterTaxAmount($request->money);
+
+        $model = $this->_model::firstOrNew(['id' => $request->id]);
+
+        $model->member_id = $member_id;
+        $model->money = $money;
+        $model->pay_type = 3;
         $model->save();
+
+        // 提现金额流向
+        event(new WithdrawalEvent($member_id, $money));
 
         DB::commit();
 
