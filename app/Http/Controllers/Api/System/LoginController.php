@@ -5,7 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Constant\Code;
+use App\TraitClass\ToolTrait;
 use App\Models\Api\Module\Member;
+use App\Models\Api\Module\Organization;
 use App\Http\Controllers\Api\BaseController;
 
 
@@ -17,6 +19,8 @@ use App\Http\Controllers\Api\BaseController;
  */
 class LoginController extends BaseController
 {
+  use ToolTrait;
+
   // 模型名称
   protected $_model = 'App\Models\Api\Module\Organization';
 
@@ -25,7 +29,7 @@ class LoginController extends BaseController
    * @apiDescription 通过第三方软件-微信，进行登录
    * @apiGroup 01. 登录模块
    *
-   * @apiParam {string} [invite_code] 邀请码
+   * @apiParam {string} [token] 邀请密钥
    * @apiParam {string} code 微信code
    * @apiParam {string} avatar 会员头像
    * @apiParam {string} nickname 会员姓名
@@ -71,46 +75,44 @@ class LoginController extends BaseController
     {
       try
       {
-        // 如果存在邀请码
-        $invite_code = $request->invite_code ?? 0;
+        $condition = self::getSimpleWhereData();
 
-        $data = Member::getUserOpenId($request->code);
+        // 获取微信数据
+        $wechat = Member::getUserOpenId($request->code);
 
-        if(empty($data) || empty($data['openid']))
+        if(empty($wechat) || empty($wechat['openid']))
         {
           return self::error(Code::WX_REQUIRE_ERROR);
         }
 
-        $condition = self::getSimpleWhereData();
-
-        if(empty($invite_code))
-        {
-          $where = ['open_id' => $data['openid']];
-        }
-        else
-        {
-          $where = ['username' => $invite_code];
-        }
+        $where = ['open_id' => $wechat['openid']];
 
         $where = array_merge($condition, $where);
 
-        $response = $this->_model::getRow($where, ['parent']);
+        $response = Organization::getRow($where, ['parent']);
 
         // 用户不存在
         if(is_null($response))
         {
-          $result = $this->_model::register($request, $data['openid']);
+          if(empty($request->token))
+          {
+            $response = Organization::getRow(['open_id' => '0x000001'], 'parent');
+          }
+          else
+          {
+            Organization::register($request, $wechat['openid']);
 
-          $response = $this->_model::getRow(['id' => $result->id], 'parent');
+            $response = Organization::getRow(['open_id' => $wechat['openid']], 'parent');
+          }
         }
 
         // 如果存在邀请码
-        if(!empty($invite_code))
-        {
-          $this->_model::complete($request, $data['openid']);
+        // else if(!empty($request->token))
+        // {
+        //   Organization::complete($request, $wechat['openid']);
 
-          $response = $this->_model::getRow(['id' => $response->id], 'parent');
-        }
+        //   $response = Organization::getRow(['open_id' => $wechat['openid']], 'parent');
+        // }
 
         // 用户已禁用
         if(2 == $response->status['value'])
@@ -119,13 +121,13 @@ class LoginController extends BaseController
         }
 
         // 数据不完整
-        if(empty($response->username))
-        {
-          return self::error(Code::DATA_DEFICIENCY);
-        }
+        // if(3 == $response->role_id && empty($response->username))
+        // {
+        //   return self::error(Code::DATA_DEFICIENCY);
+        // }
 
         // 在特定时间内访问次数过多，就触发访问限制
-        if($this->_model::AccessRestrictions($response))
+        if(Organization::AccessRestrictions($response))
         {
           return self::error(Code::ACCESS_RESTRICTIONS);
         }
@@ -147,7 +149,7 @@ class LoginController extends BaseController
         }
 
         // 记录登录信息
-        $this->_model::login($response, $request);
+        Organization::login($response, $request);
 
         return self::success([
           'code' => 200,
@@ -214,7 +216,7 @@ class LoginController extends BaseController
 
       try
       {
-        $model = $this->_model::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
+        $model = Organization::firstOrNew(['open_id' => $request->open_id, 'status' => 1]);
 
         $model->open_id  = $request->open_id ?? '';
         $model->role_id  = 3;
@@ -303,7 +305,7 @@ class LoginController extends BaseController
       {
         $condition = self::getSimpleWhereData($request->open_id, 'open_id');
 
-        $model = $this->_model::getRow($condition);
+        $model = Organization::getRow($condition);
 
         if(empty($model->id))
         {

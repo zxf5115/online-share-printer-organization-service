@@ -17,9 +17,12 @@ use App\Models\Common\Module\Organization as Common;
  */
 class Organization extends Common
 {
+  use ToolTrait;
+
   // 隐藏的属性
   public $hidden = [
     'organization_id',
+    'open_id',
     'password',
     'password_salt',
     'remember_token',
@@ -49,13 +52,40 @@ class Organization extends Common
 
     try
     {
-      $model = self::firstOrNew(['open_id' => $open_id, 'status' => 1]);
+      $role_id = 3;
 
-      $model->open_id  = $open_id ?? '';
-      $model->role_id  = 3;
-      $model->avatar   = Parameter::AVATER;
-      $model->username = '';
-      $model->nickname = Parameter::NICKNAME . '_' . time();
+      $parent_id = 0;
+
+      $username = '';
+
+      // 如果存在邀请密钥
+      if(!empty($request->token))
+      {
+        // 将邀请密钥数据解密
+        $invitation = explode(';', $request->token);
+
+        $username = self::decrypt($invitation['0']);
+
+        $role_id = self::decrypt($invitation['1']);
+      }
+
+      if(2 == $role_id)
+      {
+        $model = self::firstOrNew(['open_id' => $open_id, 'status' => 1]);
+
+        $parent_id = self::getValue('id', ['username' => $username]);
+
+        $model->parent_id = $parent_id;
+      }
+      else
+      {
+        $model = self::firstOrNew(['username' => $username, 'status' => 1]);
+      }
+
+      $model->open_id   = $open_id ?? '';
+      $model->role_id   = $role_id ?? '';
+      $model->avatar    = Parameter::AVATER;
+      $model->nickname  = Parameter::NICKNAME . '_' . time();
       $model->save();
 
       $data = [
@@ -113,9 +143,38 @@ class Organization extends Common
   {
     try
     {
-      $model = self::firstOrNew(['username' => $request->invite_code, 'status' => 1]);
+      $role_id = 3;
+
+      $parent_id = 0;
+
+      $username = '';
+
+      // 如果存在邀请密钥
+      if(!empty($request->token))
+      {
+        // 将邀请密钥数据解密
+        $invitation = explode(';', $request->token);
+
+        $username = self::decrypt($invitation['0']);
+
+        $role_id = self::decrypt($invitation['1']);
+      }
+
+      $model = self::firstOrNew(['open_id' => $open_id, 'status' => 1]);
+
+      if(2 == $role_id)
+      {
+        $parent_id = self::getValue('id', ['username' => $username]);
+
+        $model->parent_id = $parent_id;
+      }
+      else
+      {
+        $model->username = $username;
+      }
 
       $model->open_id  = $open_id ?? '';
+      $model->role_id  = $role_id ?? '';
       $model->avatar   = $request->avatar ?? $model->avatar;
       $model->nickname = $request->nickname ?? $model->nickname;
       $model->save();
