@@ -174,8 +174,8 @@
             "group": "Parameter",
             "type": "string",
             "optional": true,
-            "field": "invite_code",
-            "description": "<p>邀请码</p>"
+            "field": "token",
+            "description": "<p>邀请密钥</p>"
           },
           {
             "group": "Parameter",
