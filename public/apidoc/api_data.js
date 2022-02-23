@@ -4640,9 +4640,9 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/api/organization/printer/first_step",
-    "title": "04. 添加步骤一[TODO]",
-    "description": "<p>当前机构添加打印机, 第一步</p>",
+    "url": "/api/organization/printer/delete",
+    "title": "07. 删除打印机",
+    "description": "<p>当前店长删除打印机</p>",
     "group": "30._机构打印机模块",
     "permission": [
       {
@@ -4677,14 +4677,82 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "printer_id",
+            "description": "<p>打印机自增编号</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/printer/delete"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/PrinterController.php",
+    "groupTitle": "30._机构打印机模块",
+    "name": "PostApiOrganizationPrinterDelete"
+  },
+  {
+    "type": "post",
+    "url": "/api/organization/printer/first_step",
+    "title": "04. 添加打印机",
+    "description": "<p>当前机构添加打印机, 第一步，添加打印机</p>",
+    "group": "30._机构打印机模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>打印机名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "code",
             "description": "<p>打印机编号</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "status",
-            "description": "<p>激活状态 1正常 2离线 3损坏</p>"
+            "field": "address",
+            "description": "<p>打印机地址</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "remark",
+            "description": "<p>打印机备注</p>"
           }
         ]
       }
@@ -4702,8 +4770,8 @@ define({ "api": [
   {
     "type": "post",
     "url": "/api/organization/printer/second_step",
-    "title": "05. 添加步骤二[TODO]",
-    "description": "<p>当前机构添加打印机, 第二步</p>",
+    "title": "05. 验证通过",
+    "description": "<p>当前机构添加打印机, 第二步，验证通过</p>",
     "group": "30._机构打印机模块",
     "permission": [
       {
@@ -4738,14 +4806,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "printer_id",
-            "description": "<p>打印机编号</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "status",
-            "description": "<p>激活状态 1正常 2离线 3损坏</p>"
+            "description": "<p>打印机自增编号</p>"
           }
         ]
       }
@@ -4824,8 +4885,8 @@ define({ "api": [
   {
     "type": "post",
     "url": "/api/organization/printer/third_step",
-    "title": "06. 添加步骤三[TODO]",
-    "description": "<p>当前机构添加打印机, 第三步</p>",
+    "title": "06. 验证失败",
+    "description": "<p>当前机构添加打印机, 第三步，验证失败</p>",
     "group": "30._机构打印机模块",
     "permission": [
       {
@@ -4860,14 +4921,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "printer_id",
-            "description": "<p>打印机编号</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "status",
-            "description": "<p>激活状态 1正常 2离线 3损坏</p>"
+            "description": "<p>打印机自增编号</p>"
           }
         ]
       }

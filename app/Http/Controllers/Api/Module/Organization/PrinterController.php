@@ -240,8 +240,8 @@ class PrinterController extends BaseController
 
 
   /**
-   * @api {post} /api/organization/printer/first_step 04. 添加步骤一[TODO]
-   * @apiDescription 当前机构添加打印机, 第一步
+   * @api {post} /api/organization/printer/first_step 04. 添加打印机
+   * @apiDescription 当前机构添加打印机, 第一步，添加打印机
    * @apiGroup 30. 机构打印机模块
    * @apiPermission jwt
    * @apiHeader {String} Authorization 身份令牌
@@ -250,8 +250,10 @@ class PrinterController extends BaseController
    *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
    * }
    *
-   * @apiParam {String} printer_id 打印机编号
-   * @apiParam {String} status 激活状态 1正常 2离线 3损坏
+   * @apiParam {String} title 打印机名称
+   * @apiParam {String} code 打印机编号
+   * @apiParam {String} address 打印机地址
+   * @apiParam {String} remark 打印机备注
    *
    * @apiSampleRequest /api/organization/printer/first_step
    * @apiVersion 1.0.0
@@ -259,11 +261,11 @@ class PrinterController extends BaseController
   public function first_step(Request $request)
   {
     $messages = [
-      'printer_id.required' => '请您输入打印机编号',
+      'code.required' => '请您输入打印机编号',
     ];
 
     $rule = [
-      'printer_id' => 'required',
+      'code' => 'required',
     ];
 
     // 验证用户数据内容是否正确
@@ -275,32 +277,46 @@ class PrinterController extends BaseController
     }
     else
     {
-      DB::beginTransaction();
-
       try
       {
-        $field = self::getCurrentUserQueryField();
+        $condition = self::getSimpleWhereData();
 
-        $condition = self::getCurrentWhereData($field);
-
-        $where = ['id' => $request->printer_id];
+        $where = ['code' => $request->code];
 
         $condition = array_merge($condition, $where);
 
         $model = $this->_model::getRow($condition);
 
-        $model->activate_status = $request->status ?? 1;
-        $model->activate_time   = time();
-        $model->save();
+        // 如果当前用户角色不是店长
+        if(2 != self::getCurrentRoleId())
+        {
+          return self::error(Code::MEMBER_ROLE_NO_MANAGER);
+        }
 
-        DB::commit();
+        // 如果打印机编号不存在
+        if(empty($model->id))
+        {
+          return self::error(Code::PRINTER_EMPTY);
+        }
+
+        // 如果打印机状态不是未绑定
+        if(2 != $model->bind_status['value'])
+        {
+          return self::error(Code::PRINTER_NO_BIND);
+        }
+
+        $model->manager_id = self::getCurrentId();
+        $model->title = $request->title ?? '';
+        $model->address = $request->address ?? '';
+        $model->remark = $request->remark ?? '';
+        $model->bind_status = 3;
+        $model->bind_time = time();
+        $model->save();
 
         return self::success(Code::message(Code::HANDLE_SUCCESS));
       }
       catch(\Exception $e)
       {
-        DB::rollback();
-
         // 记录异常信息
         self::record($e);
 
@@ -311,8 +327,8 @@ class PrinterController extends BaseController
 
 
   /**
-   * @api {post} /api/organization/printer/second_step 05. 添加步骤二[TODO]
-   * @apiDescription 当前机构添加打印机, 第二步
+   * @api {post} /api/organization/printer/second_step 05. 验证通过
+   * @apiDescription 当前机构添加打印机, 第二步，验证通过
    * @apiGroup 30. 机构打印机模块
    * @apiPermission jwt
    * @apiHeader {String} Authorization 身份令牌
@@ -321,8 +337,7 @@ class PrinterController extends BaseController
    *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
    * }
    *
-   * @apiParam {String} printer_id 打印机编号
-   * @apiParam {String} status 激活状态 1正常 2离线 3损坏
+   * @apiParam {String} printer_id 打印机自增编号
    *
    * @apiSampleRequest /api/organization/printer/second_step
    * @apiVersion 1.0.0
@@ -330,7 +345,7 @@ class PrinterController extends BaseController
   public function second_step(Request $request)
   {
     $messages = [
-      'printer_id.required' => '请您输入打印机编号',
+      'printer_id.required' => '请您输入打印机自增编号',
     ];
 
     $rule = [
@@ -350,9 +365,7 @@ class PrinterController extends BaseController
 
       try
       {
-        $field = self::getCurrentUserQueryField();
-
-        $condition = self::getCurrentWhereData($field);
+        $condition = self::getSimpleWhereData();
 
         $where = ['id' => $request->printer_id];
 
@@ -360,8 +373,22 @@ class PrinterController extends BaseController
 
         $model = $this->_model::getRow($condition);
 
-        $model->activate_status = $request->status ?? 1;
-        $model->activate_time   = time();
+        // 如果打印机编号不存在
+        if(empty($model->id))
+        {
+          return self::error(Code::PRINTER_EMPTY);
+        }
+
+        // 如果打印机状态不是未绑定
+        if(3 != $model->bind_status['value'])
+        {
+          return self::error(Code::PRINTER_NO_WAIT_BIND);
+        }
+
+        $model->bind_status = 1;
+        $model->bind_time = time();
+        $model->activate_status = 1;
+        $model->activate_time = time();
         $model->save();
 
         DB::commit();
@@ -382,8 +409,8 @@ class PrinterController extends BaseController
 
 
   /**
-   * @api {post} /api/organization/printer/third_step 06. 添加步骤三[TODO]
-   * @apiDescription 当前机构添加打印机, 第三步
+   * @api {post} /api/organization/printer/third_step 06. 验证失败
+   * @apiDescription 当前机构添加打印机, 第三步，验证失败
    * @apiGroup 30. 机构打印机模块
    * @apiPermission jwt
    * @apiHeader {String} Authorization 身份令牌
@@ -392,8 +419,7 @@ class PrinterController extends BaseController
    *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
    * }
    *
-   * @apiParam {String} printer_id 打印机编号
-   * @apiParam {String} status 激活状态 1正常 2离线 3损坏
+   * @apiParam {String} printer_id 打印机自增编号
    *
    * @apiSampleRequest /api/organization/printer/third_step
    * @apiVersion 1.0.0
@@ -401,7 +427,7 @@ class PrinterController extends BaseController
   public function third_step(Request $request)
   {
     $messages = [
-      'printer_id.required' => '请您输入打印机编号',
+      'printer_id.required' => '请您输入打印机自增编号',
     ];
 
     $rule = [
@@ -417,13 +443,9 @@ class PrinterController extends BaseController
     }
     else
     {
-      DB::beginTransaction();
-
       try
       {
-        $field = self::getCurrentUserQueryField();
-
-        $condition = self::getCurrentWhereData($field);
+        $condition = self::getSimpleWhereData();
 
         $where = ['id' => $request->printer_id];
 
@@ -431,18 +453,99 @@ class PrinterController extends BaseController
 
         $model = $this->_model::getRow($condition);
 
-        $model->activate_status = $request->status ?? 1;
-        $model->activate_time   = time();
-        $model->save();
+        // 如果打印机编号不存在
+        if(empty($model->id))
+        {
+          return self::error(Code::PRINTER_EMPTY);
+        }
 
-        DB::commit();
+        // 如果打印机状态不是未绑定
+        if(3 != $model->bind_status['value'])
+        {
+          return self::error(Code::PRINTER_NO_WAIT_BIND);
+        }
+
+        $model->manager_id = 0;
+        $model->title = '';
+        $model->address = '';
+        $model->remark = '';
+        $model->bind_status = 2;
+        $model->bind_time = 0;
+        $model->activate_status = 2;
+        $model->activate_time   = 0;
+        $model->save();
 
         return self::success(Code::message(Code::HANDLE_SUCCESS));
       }
       catch(\Exception $e)
       {
-        DB::rollback();
+        // 记录异常信息
+        self::record($e);
 
+        return self::error(Code::HANDLE_FAILURE);
+      }
+    }
+  }
+
+
+  /**
+   * @api {post} /api/organization/printer/delete 07. 删除打印机
+   * @apiDescription 当前店长删除打印机
+   * @apiGroup 30. 机构打印机模块
+   * @apiPermission jwt
+   * @apiHeader {String} Authorization 身份令牌
+   * @apiHeaderExample {json} Header-Example:
+   * {
+   *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
+   * }
+   *
+   * @apiParam {String} printer_id 打印机自增编号
+   *
+   * @apiSampleRequest /api/organization/printer/delete
+   * @apiVersion 1.0.0
+   */
+  public function delete(Request $request)
+  {
+    $messages = [
+      'printer_id.required' => '请您输入打印机自增编号',
+    ];
+
+    $rule = [
+      'printer_id' => 'required',
+    ];
+
+    // 验证用户数据内容是否正确
+    $validation = self::validation($request, $messages, $rule);
+
+    if(!$validation['status'])
+    {
+      return $validation['message'];
+    }
+    else
+    {
+      try
+      {
+        $condition = self::getCurrentWhereData('manager_id');
+
+        $where = ['id' => $request->printer_id];
+
+        $condition = array_merge($condition, $where);
+
+        $model = $this->_model::getRow($condition);
+
+        // 如果打印机编号不存在
+        if(empty($model->id))
+        {
+          return self::error(Code::PRINTER_EMPTY);
+        }
+
+        $model->status = -2;
+        $model->save();
+
+        return self::success(Code::message(Code::HANDLE_SUCCESS));
+      }
+      catch(\Exception $e)
+      {
         // 记录异常信息
         self::record($e);
 

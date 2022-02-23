@@ -70,8 +70,10 @@ class Code
 
 
 
-  // 学员任务进度不存在
+  // 当前用户未达成条件
   const MEMBER_TARGET_EMPTY = 9001;
+  // 当前用户角色非店长
+  const MEMBER_ROLE_NO_MANAGER = 90011;
 
   // 订单状态错误
   const CURRENT_ORDER_NO_CANCEL = 9002;
@@ -136,6 +138,14 @@ class Code
   // 数据不完整，请联系平台管理员
   const DATA_DEFICIENCY = 10005;
 
+  // 打印机不存在
+  const PRINTER_EMPTY = 10006;
+
+  // 当前打印机已绑定
+  const PRINTER_NO_BIND = 10007;
+
+  // 当前打印机不是待确认状态
+  const PRINTER_NO_WAIT_BIND = 10008;
 
 
   public static $message = [
@@ -210,10 +220,8 @@ class Code
     self::CURRENT_MEMBER_ASSET_DEFICIENCY => '当前会员可用余额不足',
     self::ATTENTION_MEMBER_EMPTY => '被关注用户不存在',
 
-
-
-
     self::MEMBER_TARGET_EMPTY => '当前用户未达成条件',
+    self::MEMBER_ROLE_NO_MANAGER => '当前用户角色非店长',
 
 
     self::CURRENT_ORDER_NO_CANCEL => '当前订单不可以取消',
@@ -234,6 +242,9 @@ class Code
     self::INSUFFICIENT_FUND => '账户金额不足',
 
     self::DATA_DEFICIENCY => '请联系平台完善资料',
+    self::PRINTER_EMPTY => '打印机不存在',
+    self::PRINTER_NO_BIND => '当前打印机已绑定',
+    self::PRINTER_NO_WAIT_BIND => '当前打印机不是待确认状态',
   ];
 
 

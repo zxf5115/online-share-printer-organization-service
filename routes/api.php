@@ -184,6 +184,7 @@ $api->version('v1', [
             $api->post('first_step', 'PrinterController@first_step');
             $api->post('second_step', 'PrinterController@second_step');
             $api->post('third_step', 'PrinterController@third_step');
+            $api->post('delete', 'PrinterController@delete');
           });
 
           // 机构维修路由
