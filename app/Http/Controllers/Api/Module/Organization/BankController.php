@@ -159,7 +159,7 @@ class BankController extends BaseController
       $where = ['id' => $request->id];
 
       $model = $this->_model::getRow($condition);
-      $model->save();
+      $model->delete();
 
       return self::success(Code::message(Code::HANDLE_SUCCESS));
     }
