@@ -13,7 +13,6 @@ class Bank extends Common
 {
   // 隐藏的属性
   public $hidden = [
-    'id',
     'organization_id',
     'member_id',
     'status',
