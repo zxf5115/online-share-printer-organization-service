@@ -89,6 +89,8 @@ class BankController extends BaseController
       'open_bank_name.required' => '请您输入开户行名称',
       'branch_bank_name.required' => '请您输入支行名称',
       'card_no.required' => '请您输入银行卡号',
+      'card_no.max' => '银行卡号最多19位',
+      'card_no.min' => '银行卡号最少16位',
     ];
 
     $rule = [
@@ -96,6 +98,7 @@ class BankController extends BaseController
       'open_bank_name' => 'required',
       'branch_bank_name' => 'required',
       'card_no' => 'required',
+      'card_no' => 'max:19|min:16',
     ];
 
     // 验证用户数据内容是否正确

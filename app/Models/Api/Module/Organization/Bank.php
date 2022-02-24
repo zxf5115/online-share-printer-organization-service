@@ -38,6 +38,11 @@ class Bank extends Common
   {
     $length = strlen($value) - 8;
 
+    if($length <= 0)
+    {
+      return $value;
+    }
+
     $data = str_repeat('*', $length);
 
     return substr_replace($value, $data, 4, $length);
