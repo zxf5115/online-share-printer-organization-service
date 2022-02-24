@@ -4096,6 +4096,60 @@
     "name": "GetApiOrganizationBankData"
   },
   {
+    "type": "get",
+    "url": "/api/organization/bank/delete",
+    "title": "03. 删除我的银行卡",
+    "description": "<p>删除当前机构银行卡</p>",
+    "group": "26._机构银行模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "字段说明": [
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>银行卡自增编号</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/bank/delete"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/Organization/BankController.php",
+    "groupTitle": "26._机构银行模块",
+    "name": "GetApiOrganizationBankDelete"
+  },
+  {
     "type": "post",
     "url": "/api/organization/bank/handle",
     "title": "02. 操作银行卡",

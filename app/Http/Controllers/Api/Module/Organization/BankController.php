@@ -20,7 +20,6 @@ class BankController extends BaseController
   protected $_model = 'App\Models\Api\Module\Organization\Bank';
 
 
-
   /**
    * @api {get} /api/organization/bank/data 01. 我的银行卡详情
    * @apiDescription 获取当前机构银行卡详情
@@ -131,6 +130,44 @@ class BankController extends BaseController
 
         return self::error(Code::HANDLE_FAILURE);
       }
+    }
+  }
+
+
+  /**
+   * @api {get} /api/organization/bank/delete 03. 删除我的银行卡
+   * @apiDescription 删除当前机构银行卡
+   * @apiGroup 26. 机构银行模块
+   * @apiPermission jwt
+   * @apiHeader {String} Authorization 身份令牌
+   * @apiHeaderExample {json} Header-Example:
+   * {
+   *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
+   * }
+   *
+   * @apiSuccess (字段说明) {String} id 银行卡自增编号
+   *
+   * @apiSampleRequest /api/organization/bank/delete
+   * @apiVersion 1.0.0
+   */
+  public function delete(Request $request)
+  {
+    try
+    {
+      $condition = self::getCurrentWhereData();
+
+      $where = ['id' => $request->id];
+
+      $response = $this->_model::delete($condition);
+
+      return self::success($response);
+    }
+    catch(\Exception $e)
+    {
+      // 记录异常信息
+      self::record($e);
+
+      return self::error(Code::ERROR);
     }
   }
 }

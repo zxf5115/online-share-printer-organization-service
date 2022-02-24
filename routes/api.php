@@ -151,6 +151,7 @@ $api->version('v1', [
           $api->group(['prefix'  => 'bank'], function ($api) {
             $api->get('data', 'BankController@data');
             $api->post('handle', 'BankController@handle');
+            $api->post('delete', 'BankController@delete');
           });
 
           // 机构收益模块路由
