@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\TraitClass\ToolTrait;
 use App\Http\Constant\Parameter;
+use App\Enum\Module\Organization\RoleEnum;
 use App\Models\Common\Module\Organization\Obtain;
 use App\Models\Common\Module\Organization as Common;
 
@@ -33,6 +34,24 @@ class Organization extends Common
     'create_time',
     'update_time'
   ];
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-02-25
+   * ------------------------------------------
+   * 角色信息封装
+   * ------------------------------------------
+   *
+   * 角色信息封装
+   *
+   * @param [type] $value [description]
+   * @return [type]
+   */
+  public function getRoleIdAttribute($value)
+  {
+    return RoleEnum::getRoleInfo($value);
+  }
 
 
   /**
