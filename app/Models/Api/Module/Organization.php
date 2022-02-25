@@ -76,6 +76,7 @@ class Organization extends Common
         $parent_id = self::getValue('id', ['username' => $username]);
 
         $model->parent_id = $parent_id;
+        $model->level = 0;
       }
       else
       {
