@@ -136,6 +136,7 @@ $api->version('v1', [
         $api->get('data', 'OrganizationController@data');
         $api->get('subordinate', 'OrganizationController@subordinate');
         $api->get('obtain', 'OrganizationController@obtain');
+        $api->post('mobile', 'OrganizationController@mobile');
 
 
         // 机构关联内容路由

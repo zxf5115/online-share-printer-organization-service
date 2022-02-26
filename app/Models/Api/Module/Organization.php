@@ -210,6 +210,75 @@ class Organization extends Common
   }
 
 
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-06-10
+   * ------------------------------------------
+   * 获取openid
+   * ------------------------------------------
+   *
+   * 获取openid
+   *
+   * @param string $code [description]
+   * @return [type]
+   */
+  public static function  getUserOpenId($code)
+  {
+    $param = [];
+
+    $param[] = 'appid=' . config('weixin.weixin_key');
+    $param[] = 'secret=' . config('weixin.weixin_secret');
+    $param[] = 'js_code=' . $code;
+    $param[] = 'grant_type=authorization_code';
+
+    $params = implode('&', $param);    //用&符号连起来
+
+    $url = config('weixin.weixin_openid_url') . '?' . $params;
+
+    //请求接口
+    $client = new \GuzzleHttp\Client([
+        'timeout' => 60
+    ]);
+
+    $res = $client->request('GET', $url);
+
+    //openid和session_key
+    return json_decode($res->getBody()->getContents(), true);
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-02-12
+   * ------------------------------------------
+   * 获取微信手机号码信息
+   * ------------------------------------------
+   *
+   * 获取微信手机号码信息
+   *
+   * @param string $code [description]
+   * @return [type]
+   */
+  public static function getWeixinMobile($code, $request, $iv)
+  {
+    $appid = config('weixin.weixin_key');
+
+    $data = self::getUserOpenId($code);
+
+    $secret = $data['session_key'];
+
+    $model = new WXBizDataCrypt($appid, $secret);
+
+    $errCode = $model->decryptData($request, $iv, $response);
+
+    $response = json_decode($response, true);
+
+    $response['openid'] = $data['openid'];
+
+    return $response;
+  }
+
+
   // 关联函数 ------------------------------------------------------
 
 

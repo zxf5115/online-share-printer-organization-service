@@ -2476,6 +2476,87 @@ define({ "api": [
     "name": "PostApiOrganizationHandle"
   },
   {
+    "type": "post",
+    "url": "/api/organization/mobile",
+    "title": "09. 机构手机号码",
+    "description": "<p>根据机构编号获取机构数据</p>",
+    "group": "20._机构模块",
+    "permission": [
+      {
+        "name": "jwt"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>身份令牌</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "code",
+            "description": "<p>微信code</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "data",
+            "description": "<p>一键登录加密数据</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "iv",
+            "description": "<p>一键登录初始向量</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "字段说明": [
+          {
+            "group": "字段说明",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>手机号码</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/api/organization/mobile"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "app/Http/Controllers/Api/Module/OrganizationController.php",
+    "groupTitle": "20._机构模块",
+    "name": "PostApiOrganizationMobile"
+  },
+  {
     "type": "get",
     "url": "/api/organization/asset/data",
     "title": "01. 我的资产",
