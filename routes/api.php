@@ -137,6 +137,7 @@ $api->version('v1', [
         $api->get('subordinate', 'OrganizationController@subordinate');
         $api->get('obtain', 'OrganizationController@obtain');
         $api->post('mobile', 'OrganizationController@mobile');
+        $api->post('qrcode', 'OrganizationController@qrcode');
 
 
         // 机构关联内容路由

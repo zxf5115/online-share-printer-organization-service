@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Constant\Code;
+use App\TraitClass\ToolTrait;
 use App\Events\Common\Sms\CodeEvent;
 use App\Events\Common\Message\SmsEvent;
 use App\Http\Controllers\Api\BaseController;
@@ -18,6 +19,8 @@ use App\Models\Api\Module\Organization\Obtain;
  */
 class OrganizationController extends BaseController
 {
+  use ToolTrait;
+
   // 模型名称
   protected $_model = 'App\Models\Api\Module\Organization';
 
@@ -624,6 +627,92 @@ class OrganizationController extends BaseController
         }
 
         $response = $data['purePhoneNumber'];
+
+        return self::success($response);
+      }
+      catch(\Exception $e)
+      {
+        // 记录异常信息
+        self::record($e);
+
+        return self::error(Code::ERROR);
+      }
+    }
+  }
+
+
+  /**
+   * @api {post} /api/organization/qrcode 09. 邀请店长二维码
+   * @apiDescription 根据机构编号获取邀请店长二维码
+   * @apiGroup 20. 机构模块
+   * @apiPermission jwt
+   * @apiHeader {String} Authorization 身份令牌
+   * @apiHeaderExample {json} Header-Example:
+   * {
+   *   "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiO"
+   * }
+   *
+   * @apiParam {string} id 机构自增编号
+   *
+   * @apiSuccess (字段说明) {String} data 二维码
+   *
+   * @apiSampleRequest /api/organization/qrcode
+   * @apiVersion 1.0.0
+   */
+  public function qrcode(Request $request)
+  {
+
+    $messages = [
+      'id.required' => '请输入机构自增编号',
+    ];
+
+    $rule = [
+      'id' => 'required',
+    ];
+
+    // 验证用户数据内容是否正确
+    $validation = self::validation($request, $messages, $rule);
+
+    if(!$validation['status'])
+    {
+      return $validation['message'];
+    }
+    else
+    {
+      try
+      {
+        $condition = self::getSimpleWhereData();
+
+        $where = ['id' => $request->id];
+
+        $condition = array_merge($condition, $where);
+
+        $model = $this->_model::getRow($condition);
+
+        if(empty($model->username))
+        {
+          return self::error(Code::CURRENT_MOBILE_EMPTY);
+        }
+
+        // 获取微信token信息
+        $result = Organization::getWeixinToken();
+
+        if(empty($result['access_token']))
+        {
+          return self::error(Code::ERROR);
+        }
+
+        $token = $result['access_token'];
+
+        $data = [
+          'invite_code' => self::encrypt($model->username),
+          'type' => self::encrypt(2)
+        ];
+
+        $data = implode(';', $data);
+
+        // 获取微信二维码数据
+        $response = Organization::getQrCode($token, $data);
 
         return self::success($response);
       }

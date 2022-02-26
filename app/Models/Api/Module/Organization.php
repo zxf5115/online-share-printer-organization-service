@@ -249,6 +249,40 @@ class Organization extends Common
 
   /**
    * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-01-13
+   * ------------------------------------------
+   * 获取微信token信息
+   * ------------------------------------------
+   *
+   * 获取微信token信息
+   *
+   * @return [type]
+   */
+  public static function  getWeixinToken()
+  {
+    $param = [];
+
+    $param[] = 'grant_type=client_credential';
+    $param[] = 'appid=' . config('weixin.weixin_key');
+    $param[] = 'secret=' .  config('weixin.weixin_secret');
+
+    $params = implode('&', $param);    //用&符号连起来
+
+    $url = config('weixin.weixin_token_url') . '?' . $params;
+
+    //请求接口
+    $client = new \GuzzleHttp\Client([
+        'timeout' => 60
+    ]);
+
+    $res = $client->request('GET', $url);
+
+    return json_decode($res->getBody()->getContents(), true);
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
    * @dateTime 2022-02-12
    * ------------------------------------------
    * 获取微信手机号码信息
@@ -276,6 +310,44 @@ class Organization extends Common
     $response['openid'] = $data['openid'];
 
     return $response;
+  }
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-01-13
+   * ------------------------------------------
+   * 获取微信小程序二维码
+   * ------------------------------------------
+   *
+   * 获取微信小程序二维码
+   *
+   * @param string $token 微信token
+   * @param string $data 小程序数据
+   * @return [type]
+   */
+  public static function getQrCode($token, $data)
+  {
+    $param = [];
+
+    $param[] = 'access_token=' . $token;
+
+    $params = implode('&', $param);    //用&符号连起来
+
+    $url = config('weixin.weixin_qrcode_url') . '?' . $params;
+
+    //请求接口
+    $client = new \GuzzleHttp\Client([
+        'timeout' => 60
+    ]);
+
+    $res = $client->request('POST', $url, [
+      'json' => [
+        'path' => 'pages/login/index?token='.$data
+      ]
+    ]);
+
+    return $res->getBody()->getContents();
   }
 
 
