@@ -117,7 +117,7 @@ class Organization extends Common
         'address'     => $request->address ?? '',
       ];
 
-      if(!empty($data))
+      if(2 == $role_id && !empty($data))
       {
         $model->archive()->delete();
         $model->archive()->create($data);
@@ -127,7 +127,7 @@ class Organization extends Common
         'money' => 0.00,
       ];
 
-      if(!empty($data))
+      if(2 == $role_id && !empty($data))
       {
         $model->asset()->delete();
         $model->asset()->create($data);
