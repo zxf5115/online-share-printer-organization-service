@@ -47,7 +47,7 @@ class Printer extends Common
     {
       $status = $this->bind_status;
 
-      if(2 == $thstatus['value'])
+      if(2 == $status['value'])
       {
         $status['value'] = 4;
 
