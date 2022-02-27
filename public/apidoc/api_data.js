@@ -1233,6 +1233,13 @@ define({ "api": [
             "optional": false,
             "field": "member_id",
             "description": "<p>机构自增编号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "manager_id",
+            "description": "<p>店长自增编号</p>"
           }
         ]
       }
