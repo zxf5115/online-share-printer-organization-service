@@ -501,9 +501,9 @@ class BaseController extends Controller
    */
   public static function getChildUserQueryField()
   {
-    $level = auth('api')->user()->level;
+    $role_id = auth('api')->user()->role_id;
 
-    if(1 == $level)
+    if(3 == $role_id)
     {
       $response = 'second_level_agent_id';
     }
