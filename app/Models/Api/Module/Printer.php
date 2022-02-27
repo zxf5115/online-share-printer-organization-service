@@ -19,6 +19,36 @@ class Printer extends Common
     'update_time'
   ];
 
+  // 追加到模型数组表单的访问器
+  protected $appends = [
+    'equipment_status'
+  ];
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2021-06-29
+   * ------------------------------------------
+   * 设备状态封装
+   * ------------------------------------------
+   *
+   * 设备状态封装
+   *
+   * @param [type] $value [description]
+   * @return [type]
+   */
+  public function getEquipmentStatusAttribute($value)
+  {
+    if(1 == $this->bind_status['value'])
+    {
+      return $this->activate_status;
+    }
+    else
+    {
+      return $this->bind_status;
+    }
+  }
+
 
   // 关联函数 ------------------------------------------------------
 
