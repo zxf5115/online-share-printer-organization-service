@@ -18,6 +18,11 @@ class PrinterController extends BaseController
   // 模型名称
   protected $_model = 'App\Models\Api\Module\Printer';
 
+  // 客户端搜索字段
+  protected $_params = [
+    'manager_id',
+  ];
+
   // 关联对像
   protected $_relevance = [
     'manager',
@@ -37,6 +42,7 @@ class PrinterController extends BaseController
    *
    * @apiParam {int} page 当前页数
    * @apiParam {int} member_id 机构自增编号
+   * @apiParam {int} manager_id 店长自增编号
    *
    * @apiSuccess (字段说明|打印机) {String} id 打印机自增编号
    * @apiSuccess (字段说明|打印机) {String} first_level_agent_id 一级代理商编号
