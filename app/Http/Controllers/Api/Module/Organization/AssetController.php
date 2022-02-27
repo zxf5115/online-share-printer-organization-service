@@ -102,6 +102,8 @@ class AssetController extends BaseController
 
       $condition = self::getCurrentWhereData($field);
 
+      $condition['bind_status'] = 1;
+
       $already_printer_total = Printer::getCount($condition);
 
       $response['printer_total']         = $printer_total;
