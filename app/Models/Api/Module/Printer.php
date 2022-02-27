@@ -45,7 +45,18 @@ class Printer extends Common
     }
     else
     {
-      return $this->bind_status;
+      if(2 == $this->bind_status['value'])
+      {
+        $this->bind_status['value'] = 4;
+
+        return $this->bind_status;
+      }
+      else if(3 == $this->bind_status['value'])
+      {
+        $this->bind_status['value'] = 5;
+
+        return $this->bind_status;
+      }
     }
   }
 
