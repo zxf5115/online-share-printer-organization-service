@@ -89,20 +89,20 @@ class LoginController extends BaseController
 
         $where = array_merge($condition, $where);
 
-        $response = Organization::getRow($where, ['parent']);
+        $response = Organization::getRow($where, ['parent', 'archive']);
 
         // 用户不存在
         if(is_null($response))
         {
           if(empty($request->token))
           {
-            $response = Organization::getRow(['open_id' => '0x000001'], 'parent');
+            $response = Organization::getRow(['open_id' => '0x000001'], ['parent', 'archive']);
           }
           else
           {
             Organization::register($request, $wechat['openid']);
 
-            $response = Organization::getRow(['open_id' => $wechat['openid']], 'parent');
+            $response = Organization::getRow(['open_id' => $wechat['openid']], ['parent', 'archive']);
           }
         }
 

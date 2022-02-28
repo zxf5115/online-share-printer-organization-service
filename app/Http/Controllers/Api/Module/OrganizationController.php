@@ -235,7 +235,9 @@ class OrganizationController extends BaseController
 
         DB::commit();
 
-        return self::success($model);
+        $response = $model->with('archive');
+
+        return self::success($response);
       }
       catch(\Exception $e)
       {
