@@ -175,6 +175,9 @@ class OrganizationController extends BaseController
    * @apiParam {string} [province_id] 省
    * @apiParam {string} [city_id] 市
    * @apiParam {string} [region_id] 县
+   * @apiParam {string} [weixin] 微信号
+   * @apiParam {string} [email] 邮箱
+   * @apiParam {string} [address] 详细地址
    *
    * @apiSampleRequest /api/organization/handle
    * @apiVersion 1.0.0
@@ -219,6 +222,8 @@ class OrganizationController extends BaseController
           'province_id' => $request->province_id ?? '',
           'city_id'     => $request->city_id ?? '',
           'region_id'   => $request->region_id ?? '',
+          'weixin'      => $request->weixin ?? '',
+          'email'       => $request->email ?? '',
           'address'     => $request->address ?? '',
         ];
 

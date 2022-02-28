@@ -2468,6 +2468,27 @@ define({ "api": [
             "optional": true,
             "field": "region_id",
             "description": "<p>县</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "weixin",
+            "description": "<p>微信号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "email",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "address",
+            "description": "<p>详细地址</p>"
           }
         ]
       }
