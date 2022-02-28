@@ -239,7 +239,7 @@ class OrganizationController extends BaseController
           'id' => $model->id
         ];
 
-        $response = Organization::getRow($where, ['archive']);
+        $response = $this->_model::getRow($where, ['archive']);
 
         return self::success($response);
       }
