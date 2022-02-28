@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Constant\Code;
 use App\Http\Controllers\Api\BaseController;
+use App\Models\Api\Module\Organization\Asset;
 
 
 /**
@@ -277,6 +278,8 @@ class PrinterController extends BaseController
     }
     else
     {
+      DB::beginTransaction();
+
       try
       {
         $condition = self::getSimpleWhereData();
@@ -313,10 +316,21 @@ class PrinterController extends BaseController
         $model->bind_time = time();
         $model->save();
 
+        // 店长资产
+        $asset = Asset::getRow(['member_id' => $model->manager_id]);
+
+        $asset->increment('should_printer_total', 1);
+        $asset->increment('already_printer_total', 1);
+        $asset->save();
+
+        DB::commit();
+
         return self::success(Code::message(Code::HANDLE_SUCCESS));
       }
       catch(\Exception $e)
       {
+        DB::rollback();
+
         // 记录异常信息
         self::record($e);
 
@@ -474,6 +488,15 @@ class PrinterController extends BaseController
         $model->activate_status = 2;
         $model->activate_time   = 0;
         $model->save();
+
+        // 店长资产
+        $asset = Asset::getRow(['member_id' => $model->manager_id]);
+
+        $asset->decrement('should_printer_total', 1);
+        $asset->decrement('already_printer_total', 1);
+        $asset->save();
+
+        DB::commit();
 
         return self::success(Code::message(Code::HANDLE_SUCCESS));
       }
