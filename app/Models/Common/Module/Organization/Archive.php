@@ -27,6 +27,8 @@ class Archive extends Base
     'province_id',
     'city_id',
     'region_id',
+    'weixin',
+    'email',
     'address',
   ];
 
