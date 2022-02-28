@@ -235,7 +235,11 @@ class OrganizationController extends BaseController
 
         DB::commit();
 
-        $response = $model->with('archive');
+        $where = [
+          'id' => $model->id
+        ];
+
+        $response = Organization::getRow($where, ['archive']);
 
         return self::success($response);
       }
