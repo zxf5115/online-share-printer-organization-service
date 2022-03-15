@@ -219,9 +219,6 @@ class OrganizationController extends BaseController
         $data = [
           'sex'         => $request->sex ?? '1',
           'age'         => $request->age ?? '1',
-          'province_id' => $request->province_id ?? '',
-          'city_id'     => $request->city_id ?? '',
-          'region_id'   => $request->region_id ?? '',
           'weixin'      => $request->weixin ?? '',
           'email'       => $request->email ?? '',
           'address'     => $request->address ?? '',
