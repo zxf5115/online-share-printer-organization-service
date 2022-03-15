@@ -224,7 +224,7 @@ class OrganizationController extends BaseController
         $archive->weixin  = $request->weixin ?? '';
         $archive->email   = $request->email ?? '';
         $archive->address = $request->address ?? '';
-        $model->save();
+        $archive->save();
 
 
         DB::commit();
