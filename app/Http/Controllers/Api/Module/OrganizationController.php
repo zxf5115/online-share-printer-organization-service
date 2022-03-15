@@ -10,6 +10,7 @@ use App\Events\Common\Sms\CodeEvent;
 use App\Events\Common\Message\SmsEvent;
 use App\Http\Controllers\Api\BaseController;
 use App\Models\Api\Module\Organization\Obtain;
+use App\Models\Api\Module\Organization\Archive;
 
 /**
  * @author zhangxiaofei [<1326336909@qq.com>]
@@ -216,19 +217,15 @@ class OrganizationController extends BaseController
         $model->nickname = $request->nickname;
         $model->save();
 
-        $data = [
-          'sex'         => $request->sex ?? '1',
-          'age'         => $request->age ?? '1',
-          'weixin'      => $request->weixin ?? '',
-          'email'       => $request->email ?? '',
-          'address'     => $request->address ?? '',
-        ];
+        $archive = Archive::firstOrNew(['member_id' => $member_id]);
 
-        if(!empty($data))
-        {
-          $model->archive()->delete();
-          $model->archive()->create($data);
-        }
+        $archive->sex     = $request->sex ?? '1';
+        $archive->age     = $request->age ?? '1';
+        $archive->weixin  = $request->weixin ?? '';
+        $archive->email   = $request->email ?? '';
+        $archive->address = $request->address ?? '';
+        $model->save();
+
 
         DB::commit();
 
