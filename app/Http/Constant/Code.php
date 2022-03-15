@@ -147,6 +147,11 @@ class Code
   // 当前打印机不是待确认状态
   const PRINTER_NO_WAIT_BIND = 10008;
 
+  // 禁止提现
+  const FORBID_WITHDRAWAL = 10009;
+  // 禁止解绑
+  const FORBID_REMOVE_BIND = 10010;
+
 
   public static $message = [
     self::SUCCESS            => '成功',
@@ -245,6 +250,10 @@ class Code
     self::PRINTER_EMPTY => '打印机不存在',
     self::PRINTER_NO_BIND => '当前打印机已绑定',
     self::PRINTER_NO_WAIT_BIND => '当前打印机不是待确认状态',
+
+
+    self::FORBID_WITHDRAWAL => '示例账户禁止提现',
+    self::FORBID_REMOVE_BIND => '示例账户禁止解绑',
   ];
 
 

@@ -24,9 +24,28 @@ class Asset extends Common
 
   // 追加到模型数组表单的访问器
   protected $appends = [
+    'total_money',
     'yesterday_money',
     'current_month_money'
   ];
+
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-03-15
+   * ------------------------------------------
+   * 总收益封装
+   * ------------------------------------------
+   *
+   * 总收益封装
+   *
+   * @param [type] $value [description]
+   * @return [type]
+   */
+  public function getTotalMoneyAttribute($value)
+  {
+    return bcadd($this->money, $this->withdrawal_money, 2);
+  }
 
 
   /**

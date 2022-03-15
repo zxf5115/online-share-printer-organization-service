@@ -176,6 +176,11 @@ class WithdrawalController extends BaseController
       {
         $member_id = self::getCurrentId();
 
+        if(1 == $member_id)
+        {
+          return self::error(Code::FORBID_WITHDRAWAL);
+        }
+
         // 最低提现金额
         $minimum_amount = Config::getConfigValue('minimum_amount');
 
