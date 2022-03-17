@@ -494,6 +494,8 @@ class PrinterController extends BaseController
           return self::error(Code::PRINTER_NO_WAIT_BIND);
         }
 
+        $manager_id = $model->manager_id;
+
         $model->manager_id = 0;
         $model->title = '';
         $model->address = '';
@@ -505,8 +507,9 @@ class PrinterController extends BaseController
         $model->save();
 
         // 店长资产
-        $asset = Asset::getRow(['member_id' => $model->manager_id]);
+        $asset = Asset::getRow(['member_id' => $manager_id]);
 
+        if($asset->sh){}
         $asset->decrement('should_printer_total', 1);
         $asset->decrement('already_printer_total', 1);
         $asset->save();
