@@ -327,6 +327,34 @@ class BaseController extends Common
     }
   }
 
+
+  /**
+   * @author zhangxiaofei [<1326336909@qq.com>]
+   * @dateTime 2022-03-17
+   * ------------------------------------------
+   * 获取当前用户的上级用户编号
+   * ------------------------------------------
+   *
+   * 获取当前用户的上级用户编号
+   *
+   * @return 用户编号
+   */
+  public static function getCurrentParentId()
+  {
+    try
+    {
+      return auth('api')->user()->parent_id ?? 0;
+    }
+    catch(\Exception $e)
+    {
+      // 记录异常信息
+      self::record($e);
+
+      return 0;
+    }
+  }
+
+
   /**
    * @author zhangxiaofei [<1326336909@qq.com>]
    * @dateTime 2020-07-08

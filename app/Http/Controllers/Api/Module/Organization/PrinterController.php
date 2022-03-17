@@ -308,6 +308,21 @@ class PrinterController extends BaseController
           return self::error(Code::PRINTER_NO_BIND);
         }
 
+        // 获取当前用户的上级用户编号
+        $parent_id = self::getCurrentParentId();
+
+        // 获取设备一级代理商编号
+        $first_level_agent_id = $model->first_level_agent_id;
+
+        // 获取设备二级代理商编号
+        $second_level_agent_id = $model->second_level_agent_id;
+
+        // 如果当前用户的上级用户不属于设备一二级代理商
+        if($parent_id != $first_level_agent_id || $parent_id != $second_level_agent_id)
+        {
+          return self::error(Code::PRINTER_INVALID);
+        }
+
         $model->manager_id = self::getCurrentId();
         $model->title = $request->title ?? '';
         $model->address = $request->address ?? '';

@@ -151,6 +151,8 @@ class Code
   const FORBID_WITHDRAWAL = 10009;
   // 禁止解绑
   const FORBID_REMOVE_BIND = 10010;
+  // 当前设备不能分配
+  const PRINTER_INVALID = 10011;
 
 
   public static $message = [
@@ -254,6 +256,8 @@ class Code
 
     self::FORBID_WITHDRAWAL => '示例账户禁止提现',
     self::FORBID_REMOVE_BIND => '示例账户禁止解绑',
+
+    self::PRINTER_INVALID => '当前设备不能分配',
   ];
 
 
