@@ -318,7 +318,7 @@ class PrinterController extends BaseController
         $second_level_agent_id = $model->second_level_agent_id;
 
         // 如果当前用户的上级用户不属于设备一二级代理商
-        if($parent_id != $first_level_agent_id || $parent_id != $second_level_agent_id)
+        if($parent_id != $first_level_agent_id && $parent_id != $second_level_agent_id)
         {
           return self::error(Code::PRINTER_INVALID);
         }
