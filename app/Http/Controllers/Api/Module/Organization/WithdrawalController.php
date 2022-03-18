@@ -216,7 +216,7 @@ class WithdrawalController extends BaseController
         $model->save();
 
         // 提现金额流向
-        event(new WithdrawalEvent($member_id, $money));
+        event(new WithdrawalEvent($member_id, $request->money));
 
         DB::commit();
 
