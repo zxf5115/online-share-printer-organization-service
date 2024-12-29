@@ -3,12 +3,12 @@
 return [
 
     'wechat' => [
-        'appid' => 'wxe011d49d77124e2b', // APP APPID
-        'app_id' => 'wxe011d49d77124e2b', // 公众号 APPID
-        'miniapp_id' => 'wxe011d49d77124e2b', // 小程序 APPID
-        'mch_id' => '1494847022',
-        'key' => 'bb908bd5d209af487eee6f095f90d1df',
-        'notify_url' => 'https://api.print.com/api/common/notify/wechat',
+        'appid' => '', // APP APPID
+        'app_id' => '', // 公众号 APPID
+        'miniapp_id' => '', // 小程序 APPID
+        'mch_id' => '',
+        'key' => '',
+        'notify_url' => '',
         'cert_client' => './cert/apiclient_cert.pem', // optional，退款等情况时用到
         'cert_key' => './cert/apiclient_key.pem',// optional，退款等情况时用到
         'log' => [ // optional
